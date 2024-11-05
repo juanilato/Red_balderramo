@@ -10,7 +10,7 @@ export class AuthService {
   //se solicita un registro del usuario, envía los datos al servicio de usuario 
   //con contraseña hasheada.
 
-  async register(data: { email: string; password: string; name?: string }) {
+  async register(data: { usuario: string; rol: string; password: string }) {
     
     const hashedPassword = await bcrypt.hash(data.password, 10);
     return this.userService.createUser({
@@ -22,8 +22,8 @@ export class AuthService {
   //Se valida el usuario (login), se realiza búsqueda de email en el servicio de usuario,
   //así como también la comparación de la contraseña (hashed) con la contraseña del usuario, 
   //dado ambos datos correctos, se retornara el usuario, caso contrario lanza error, "invalid credentials"
-  async validateUser(email: string, password: string) {
-    const user = await this.userService.getUserByEmail(email);
+  async validateUser(usuario: string, password: string) {
+    const user = await this.userService.getUserByEmail(usuario);
     if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
       return result;

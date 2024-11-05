@@ -1,18 +1,18 @@
+
+//genera el cliente de prisma
 generator client {
   provider = "prisma-client-js"
 }
-
+// genera el servidor de la información (postgreSQL) y 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
-
+// usuario creado, genera id unico, solicita usuario (email), rol y contraseña
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id       Int    @id @default(autoincrement())
+  usuario  String @unique
+  rol      String 
+  password String 
 }
