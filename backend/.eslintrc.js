@@ -22,8 +22,8 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
-    'import/newline-after-import': ['error', { count: 1 }], // Fuerza una nueva línea después de los imports
-    'import/first': 'error', // Asegura que los imports estén al principio del archivo
-    // Otras reglas que puedes personalizar según tus necesidades
+    'import/newline-after-import': ['error', { count: 1 }], 
+    'import/first': 'error', 
+    
   },
 };

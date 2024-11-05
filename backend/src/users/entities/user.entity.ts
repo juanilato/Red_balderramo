@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+// entidad del usuario a registrar
 @Entity()
 export class User {
   
