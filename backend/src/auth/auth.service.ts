@@ -19,7 +19,7 @@ export class AuthService {
     });
   }
 
-  //Se valida el usuario (login), se realiza búsqueda de email en el servicio de usuario,
+  //Se valida el usuario (login), se realiza búsqueda de usuario en el servicio de usuario,
   //así como también la comparación de la contraseña (hashed) con la contraseña del usuario, 
   //dado ambos datos correctos, se retornara el usuario, caso contrario lanza error, "invalid credentials"
   async validateUser(usuario: string, password: string) {
