@@ -16,6 +16,7 @@ export class UsersController {
     const userId = parseInt(id, 10);
     return this.usersService.updateUser(userId, data);
   }
+  //mediante el get de all permite visualizar todos los usuarios
   @Get("all")
   async showUsers(){
     return this.usersService.showUsers();

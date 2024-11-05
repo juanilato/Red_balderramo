@@ -28,9 +28,14 @@ export class UserService {
     });
   }
 
-
+  // muestra todos los usuarios usando prisma
   async showUsers(){
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      select:{
+        usuario: true,
+        rol: true
+      }
+    });
   }
 }
 
