@@ -15,7 +15,7 @@ interface FormProps{
     title: string
     description?: string
     onSubmit:(values: FormValues)=> void
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
 

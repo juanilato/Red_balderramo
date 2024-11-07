@@ -1,6 +1,7 @@
 'use client'
 
-import {Form} from "@/components/formulario"
+import React from "react";
+import {Form} from "../components/formulario"
 
 function inicioSesion () {
   return (

@@ -1,4 +1,5 @@
- import { Loader } from './Loader'
+import React from 'react'
+import { Loader } from './Loader'
 import styles from './styles.module.scss'
 
  interface SubmitButtomProps{
