@@ -23,7 +23,7 @@ export class AuthService {
   //así como también la comparación de la contraseña (hashed) con la contraseña del usuario, 
   //dado ambos datos correctos, se retornara el usuario, caso contrario lanza error, "invalid credentials"
   async validateUser(usuario: string, password: string) {
-    const user = await this.userService.getUserByEmail(usuario);
+    const user = await this.userService.getUserByUserName(usuario);
     if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
       return result;
