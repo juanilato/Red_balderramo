@@ -8,6 +8,8 @@ import {PrismaService} from '../../prisma/prisma.service';
 export class FormsService {
   constructor(private prisma: PrismaService) {}
 
+
+  //crea formulario con los datos ingresados
   async createForm(data: CreateFormDto) {
     const createdForm = await this.prisma.form.create({
       data: {
@@ -23,7 +25,7 @@ export class FormsService {
 
   }
   
-
+  //Busca todos los legajos del id del usuario (userId)
   async findAll(userId: number) {
     const forms = await this.prisma.form.findMany({
       where: { userId : userId },
@@ -31,9 +33,17 @@ export class FormsService {
   
     return forms;
   }
+  //Muestra un legajo de un id correspondiente
+  async findOne(id: number) {
+    const forms = await this.prisma.form.findUnique({
+      where: {id}, 
+    });
+    return  forms;
+  }
 
-  async findOne(id: number, userId:number) {
-    this.prisma.form.findFirst({
+  //recibe id y id de usuario y busca un legajo del usuario (userId) con el idForm ingresado
+  async findOneFromUser(id: number, userId:number) {
+    const forms = await this.prisma.form.findFirst({
       where: {
         AND: [
           { userId: userId },
@@ -41,9 +51,11 @@ export class FormsService {
         ],
       },
     });
-    return `Devolución legajo número #${id}`;
+    return forms;
   }
 
+
+  // Recibe id y data a modificar(datos opcionales) y modifica los datos del legajo correspondiente
   async update(id: number, data: UpdateFormDto) {
     this.prisma.form.update({
       where: {id},
@@ -52,11 +64,21 @@ export class FormsService {
     return `Módificaste el legajo número #${id} `;
   }
 
-
+//borra legajo según el id recibido
   async remove(id: number) {
-    this.prisma.form.delete({
+    await this.prisma.form.delete({
       where: {id}
     });
     return `Borraste el legajo número #${id}`;
   }
+
+  async UpdateFormUser(id:number, userId:number){
+    await this.prisma.form.update({
+      where: {id},
+      data: {userId},
+      
+    });
+    return `agregaste el legajo #${id} al usuario #${userId}`;
+}
+
 }

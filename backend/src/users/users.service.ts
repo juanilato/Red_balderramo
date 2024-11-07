@@ -4,12 +4,14 @@ import * as bcrypt from 'bcrypt';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {CreateUserDto} from './dto/create-user.dto';
 
-import {CreateFormDto} from '../forms/dto/create-form.dto';
+
 //servicio de usuario
 @Injectable()
 export class UserService {
+  
   //crea un objeto de prisma para manejar la base de datos 
   constructor(private prisma: PrismaService) {}
+
 
   //crea usuario (usuario, rol, contraseña)
   async createUser(data: CreateUserDto) {
@@ -17,18 +19,22 @@ export class UserService {
       { data }
     );
   }
+
+
+  //elimina usuario (error debe eliminar su contenedor)
   async removeUser(id: number) {
-    return this.prisma.user.delete({
-      where: { id },  // Elimina el usuario por su ID
+    return this.prisma.user.deleteMany({
+      where: { id },  
     });
   }
 
-  //recibe un usuario y devuelve al usuario entero de el mismo
-  async getUserByEmail(usuario: string) {
+  //recibe un usuario y devuelve todos los datos del mismo
+  async getUserByUserName(usuario: string) {
     return this.prisma.user.findUnique({ where: 
       { usuario } 
     });
   }
+
 
   // actualiza información del usuario, usando prisma update.
   // puede o no recibir valores, el valor que reciba lo cambiara, el que no lo dejara igual
@@ -46,6 +52,7 @@ export class UserService {
 
 
   // muestra todos los usuarios usando prisma
+
   async showUsers(){
     return this.prisma.user.findMany({
       include:{

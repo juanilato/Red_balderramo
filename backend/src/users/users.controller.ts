@@ -1,4 +1,4 @@
-import { Controller, Param, Put, Post, Delete, Get, Body } from '@nestjs/common';
+import { Controller, Param, Post, Patch, Delete, Get, Body } from '@nestjs/common';
 import { UserService } from './users.service';
 import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
@@ -8,21 +8,25 @@ export class UsersController {
   //crea objeto de servicio
   constructor(private usersService: UserService) {}
 
+
+   // Llama al servicio para crear el usuario le envía los datos necesarios
   @Post('/create')
   async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);  // Llama al servicio para crear el usuario
+    return this.usersService.createUser(createUserDto); 
   }
 
+
+  // Llama al servicio para eliminar el usuario, le envía un id para realizar la búsqueda y eliminarlo.
   @Delete('/delete/:id')
   async remove(@Param('id') id: string) {
-    return this.usersService.removeUser(+id);  // Llama al servicio para eliminar el usuario
+    return this.usersService.removeUser(+id);  
   }
 
 
 
-  //recibe un http solicitud de put con un id correspondiente y genera el cambio de datos solicitados.
+  //recibe un http solicitud de patch con un id correspondiente y genera el cambio de datos solicitados.
   //llama al servicio de usuario para realizar la tarea
-  @Put(':id')
+  @Patch(':id')
   async updateUser(
     @Param('id') id: string,
     @Body() data: UpdateUserDto,
@@ -30,7 +34,9 @@ export class UsersController {
     const userId = parseInt(id, 10);
     return this.usersService.updateUser(userId, data);
   }
-  //mediante el get de all permite visualizar todos los usuarios
+
+
+  //mediante el get de all permite visualizar todos los usuarios en la base de datos
   @Get("all")
   async showUsers(){
     return this.usersService.showUsers();
