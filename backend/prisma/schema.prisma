@@ -10,9 +10,21 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 // usuario creado, genera id unico, solicita usuario (email), rol y contraseña
+
+
 model User {
   id       Int    @id @default(autoincrement())
   usuario  String @unique
-  rol      String 
-  password String 
+  rol      String
+  password String
+  forms    Form[] @relation("UserForms")  
+}
+
+model Form {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  userId      Int?
+  user        User?     @relation("UserForms", fields: [userId], references: [id], onDelete: SetNull)
 }
