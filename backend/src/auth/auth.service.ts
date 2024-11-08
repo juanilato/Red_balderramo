@@ -30,4 +30,10 @@ export class AuthService {
     }
     throw new UnauthorizedException('Invalid credentials');
   }
+  
+
+  async hashPassword(password: string): Promise<string> {
+    const saltRounds = 10;
+    return await bcrypt.hash(password, saltRounds);
+  }
 }
