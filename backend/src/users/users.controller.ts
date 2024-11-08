@@ -2,17 +2,23 @@ import { Controller, Param, Post, Patch, Delete, Get, Body } from '@nestjs/commo
 import { UserService } from './users.service';
 import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
+import { AuthService } from '../auth/auth.service';
 //controlador de usuario
 @Controller('users')
 export class UsersController {
   //crea objeto de servicio
-  constructor(private usersService: UserService) {}
+  constructor(
+    private readonly usersService: UserService,
+    private readonly authService: AuthService // Inyecta AuthService
+  ) {}
 
 
    // Llama al servicio para crear el usuario le envía los datos necesarios
   @Post('/create')
   async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto); 
+    const hashedPassword = await this.authService.hashPassword(createUserDto.password);
+    const userWithHashedPassword = { ...createUserDto, password: hashedPassword };
+    return this.usersService.createUser(userWithHashedPassword);
   }
 
 
