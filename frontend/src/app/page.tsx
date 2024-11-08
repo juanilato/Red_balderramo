@@ -6,27 +6,30 @@ import { Form } from "../components/formulario";
 
 function InicioSesion() {
   const [error, setError] = useState(null);
-  const router = useRouter(); // Importamos useRouter para redirección
+  const router = useRouter(); // Para redireccionar
 
   const handleLogin = async (data) => {
+    //Realiza la peticion a la base de datos llamando el auth controller generado POST
     try {
       const response = await fetch("http://localhost:4000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include', // Incluir cookies en la solicitud
         body: JSON.stringify({
           usuario: data.usuario,
           password: data.password,
         }),
       });
 
+      //Retorna error de inicio de sesion si no encuentra el usuario
       if (!response.ok) {
         throw new Error("Error en el inicio de sesión");
       }
 
-      // Si el inicio de sesión fue exitoso, redirigimos al usuario al home
-      router.push("/home");
+      // Si el inicio de sesión fue exitoso, redirige al usuario
+      router.push("/panel");
 
     } catch (error) {
       setError(error.message);
@@ -34,6 +37,7 @@ function InicioSesion() {
     }
   };
 
+  //Retorna al localhost:3000 el formulario entero
   return (
     <>
       <Form title="Inicio Sesion" onSubmit={handleLogin} description="Formulario para iniciar Sesion">
