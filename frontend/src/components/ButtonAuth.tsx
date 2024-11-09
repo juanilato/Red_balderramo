@@ -15,10 +15,12 @@ export default function ButtonAuth(){
         return(
             <>
             ingreso como {session.user?.email} <br/>
-            <button
-            onClick = {() => signOut()}>
-                Salir
-            </button>
+            
+            <button onClick = {() => signOut()}> Salir</button>
+
+
+
+
 
             </>
         )
@@ -26,7 +28,7 @@ export default function ButtonAuth(){
     return (
         <>
         No logeado en <br/>
-        <button onClick={() => signIn()}> Ingresar</button>
+        <button onClick={() => signIn("credentials")}> Ingresar</button>
         </>
     )
 }
