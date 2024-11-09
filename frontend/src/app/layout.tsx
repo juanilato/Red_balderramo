@@ -1,6 +1,7 @@
 import './globals.css'
 import type {Metadata} from 'next'
 import React from 'react'
+import SessionAuthProvider from '../context/SessionAuthProvider'
 
 export const metadata: Metadata={
   title:'Pruebas',
@@ -17,7 +18,7 @@ export default function RootLayout({ children }: RootLayoutProps ) {
       <html lang="en">
         <body>
           <main className='min-h-screen flex flex-col items-center justify-center '>
-            {children}
+            <SessionAuthProvider>{children}</SessionAuthProvider>
           </main>
         </body>
       </html>
