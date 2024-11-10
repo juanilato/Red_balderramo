@@ -10,7 +10,11 @@ export class UsersController {
      
   ) {}
 
-
+  @Get(":id")
+  async showUser(@Param('id') id: string){
+    const user = await this.usersService.showUser(+id);
+    return user;
+  }
 
   // Llama al servicio para eliminar el usuario, le envía un id para realizar la búsqueda y eliminarlo.
   @Delete('/delete/:id')
@@ -37,4 +41,5 @@ export class UsersController {
   async showUsers(){
     return this.usersService.showUsers();
   }
+
 }

@@ -7,10 +7,10 @@ import React from "react";
 export default function HomePage() {
     return (
         <main>
-        <div >
-            <Form title="Login" description="Please enter your credentials">
-                <Form.Input name="username" placeholder="Username" />
-                <Form.Input name="password" type="password" placeholder="Password" />
+        <div>
+            <Form title="Login" description="Ingrese sus datos">
+                <Form.Input name="username" placeholder="Usuario" />
+                <Form.Input name="password" type="password" placeholder="Contraseña" />
                 <Form.SubmitButtom>Login</Form.SubmitButtom>
             </Form>
         </div>

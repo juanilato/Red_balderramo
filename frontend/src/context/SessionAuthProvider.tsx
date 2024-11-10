@@ -1,4 +1,4 @@
-"user client";
+"use client";
 
 import {SessionProvider} from "next-auth/react";
 // Permite que next-auth gestione la sesión y su estado 

@@ -27,6 +27,12 @@ export class UserService {
       where: { id },  
     });
   }
+  //muestra un solo usuario según su id
+  async showUser(id: number){
+    return this.prisma.user.findUnique({
+      where: { id },
+    })
+  }
 
   //recibe un usuario y devuelve todos los datos del mismo
   async getUserByUserName(usuario: string) {
