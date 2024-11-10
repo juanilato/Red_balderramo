@@ -2,6 +2,7 @@
 
 import {signIn, signOut, useSession} from "next-auth/react";
 
+//componente que muestra botón de Ingreso o Salida según si la sessión esta activa o no
 
 export default function ButtonAuth(){
     const{ data: session, status} = useSession();
@@ -17,11 +18,6 @@ export default function ButtonAuth(){
             ingreso como {session.user?.email} <br/>
             
             <button onClick = {() => signOut()}> Salir</button>
-
-
-
-
-
             </>
         )
     }

@@ -1,17 +1,19 @@
-import { useSession, signIn, signOut} from "next-auth/react"
+import { Form } from '../components/formulario/index.tsx';
+import React from "react";
 
 
-export default function Component(){
-    const { data: session } = useSession()
-    if (session){
-        return <>
-            Signed in as {session.user.email} <br/>
-        <button onClick= {()=>signOut()}> Salir</button>
+// se obtiene el estado de la sesión y se muestra mensaje según si el usuario esta autenticado o no
 
-        </>
-    }
-    return <>
-    Not signed in <br/>
-    <button onClick = {() => signIn()}> Ingresar </button>
-    </>
+export default function HomePage() {
+    return (
+        <main>
+        <div >
+            <Form title="Login" description="Please enter your credentials">
+                <Form.Input name="username" placeholder="Username" />
+                <Form.Input name="password" type="password" placeholder="Password" />
+                <Form.SubmitButtom>Login</Form.SubmitButtom>
+            </Form>
+        </div>
+        </main>
+    );
 }

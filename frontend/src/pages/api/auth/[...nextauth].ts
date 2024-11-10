@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-
+// Define la configuración de autenticación usando NextAuth con un proveedor de Credentials
 export default NextAuth({
   providers: [
       CredentialsProvider({
