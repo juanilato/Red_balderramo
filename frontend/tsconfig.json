@@ -26,10 +26,12 @@
   },
   "include": [
     "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
-, "src/app/api/[...nextauth]"  ],
+    "src/**/*.{ts,tsx}",
+    "src/app/**/*.{ts,tsx}",
+    "src/app/pages/**/*.{ts,tsx}",
+    "src/app/app/api/**/*.{ts,tsx}",
+    ".next/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

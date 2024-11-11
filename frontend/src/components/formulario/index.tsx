@@ -1,6 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect  } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import styles from './styles.module.scss';
+import { useRouter } from "next/navigation";
 
 import { Input, SubmitButtom } from "./components";
 
@@ -22,6 +23,13 @@ export const FormContext = createContext<FormContextType | undefined>(undefined)
 export function Form({ title, children, description }: FormProps) {
     const { data: session } = useSession();
     const [formValues, setFormValues] = useState<FormValues>({});
+    const router = useRouter()
+ 
+    useEffect(() => {
+        if (session) {
+          router.push("/dashboard"); 
+        }
+      }, [session, router]); 
 
     const handleLoginSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -32,6 +40,7 @@ export function Form({ title, children, description }: FormProps) {
         }).then((response) => {
             if (!response?.error) {
                 console.log("Login successful!");
+                router.push("/dashboard");
             } else {
                 console.log("Login failed:", response.error);
             }
@@ -45,16 +54,9 @@ export function Form({ title, children, description }: FormProps) {
                     <h2>{title}</h2>
                     {description && <p>{description}</p>}
                 </div>
-                {session ? (
-                    <div>
-                        <p>Welcome, {session.user?.email}</p>
-                        <button onClick={() => signOut()}>Sign Out</button>
-                    </div>
-                ) : (
                     <form onSubmit={handleLoginSubmit}>
                         {children}
                     </form>
-                )}
             </div>
         </FormContext.Provider>
     );

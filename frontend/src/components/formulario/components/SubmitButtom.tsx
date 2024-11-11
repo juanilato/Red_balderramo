@@ -3,8 +3,9 @@ import { Loader } from './Loader'
 import styles from './styles.module.scss'
 
  interface SubmitButtomProps{
-    buttonText: string
-    isLoading?: boolean
+    buttonText: string;
+    isLoading?: boolean;
+    children: React.ReactNode;
  }
 
  export function SubmitButtom({buttonText, isLoading}:SubmitButtomProps){
