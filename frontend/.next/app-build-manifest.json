@@ -17,6 +17,11 @@
       "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
+    "/iniciosesion/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/iniciosesion/page.js"
+    ],
     "/dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

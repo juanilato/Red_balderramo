@@ -23,12 +23,14 @@ const DashboardPage = () => {
     const fetchClientData = async () => {
       try {
         setLoading(true);
-        const userId = session.user.id; // Aquí session.user está asegurado
+        const userId = (session.user as { id: string; token: string }).id;  
+        const token = (session.user as { id: string; token: string }).token;
+        
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${session.user.token}`,  // Usamos el token JWT para autorizar la solicitud
+            "Authorization": `Bearer ${token}`,  // Usamos el token JWT para autorizar la solicitud
           },
         });
 
@@ -50,25 +52,25 @@ const DashboardPage = () => {
   }, [session, status]);
 
   return (
+    
     <div>
-      
       {loading ? (
         <Loader />
       ) : (
         clientData && (
           <>
             <ClientInfo clientData={clientData} />
-            <div style={{ backgroundColor: clientData.rol === 'jefe' ? 'green' : 'red', color: 'white' }}>
-              <h1>{clientData.rol === 'jefe' ? 'Bienvenido, Jefe' : 'Bienvenido, Empleado'}</h1>
+            <div
+              style={{
+                backgroundColor: (clientData as { rol: string }).rol === 'jefe' ? 'green' : 'red',
+                color: 'white',
+              }}
+            >
+              <h1>{(clientData as { rol: string }).rol === 'jefe' ? 'Bienvenido, Jefe' : 'Bienvenido, Empleado'}</h1>
             </div>
           </>
-          
         )
-        
-        
-      )}
- 
-    
+      )}    
       <SubmitButtom buttonText = "Salir" onClick={signOut} isLoading={loading}>
       Salir
       </SubmitButtom>
