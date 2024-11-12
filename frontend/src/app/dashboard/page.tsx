@@ -2,14 +2,18 @@
 
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import ClientInfo from "../../components/dashboard/infoCliente";
-import { Loader } from "../../components/formulario/components/Loader";
-import { SubmitButtom } from "../../components/dashboard/SubmitButton";
+import InfoUsuario from "../../components/infousuario/infoUsuario";
+import styles from './styles.module.scss';
+import CajaBotones from '../../components/cajabotones/CajaBotones';
 
+interface ClientData {
+  rol: string;
+  nombre: string;
+}
 
 const DashboardPage = () => {
   const { data: session, status } = useSession();
-  const [clientData, setClientData] = useState(null);
+  const [clientData, setClientData] = useState<ClientData | null>(null); // Cambia a ClientData o null
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -52,30 +56,19 @@ const DashboardPage = () => {
   }, [session, status]);
 
   return (
-    
     <div>
-      {loading ? (
-        <Loader />
-      ) : (
-        clientData && (
-          <>
-            <ClientInfo clientData={clientData} />
-            <div
-              style={{
-                backgroundColor: (clientData as { rol: string }).rol === 'jefe' ? 'green' : 'red',
-                color: 'white',
-              }}
-            >
-              <h1>{(clientData as { rol: string }).rol === 'jefe' ? 'Bienvenido, Jefe' : 'Bienvenido, Empleado'}</h1>
-            </div>
-          </>
-        )
-      )}    
-      <SubmitButtom buttonText = "Salir" onClick={signOut} isLoading={loading}>
-      Salir
-      </SubmitButtom>
+      {/* Información del usuario en la esquina superior derecha */}
+      <div className={styles.prueba}>
+        {clientData ? (
+          <InfoUsuario clientData={clientData} signOut={signOut} />
+        ) : (
+          <div>Cargando...</div>
+        )}
+      </div>
+
+      {/* Contenedor principal de las cajas */}
+      <CajaBotones clientData={clientData} /> 
     </div>
-    
   );
 };
 

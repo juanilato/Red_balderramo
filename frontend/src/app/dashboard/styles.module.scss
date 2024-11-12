@@ -1,0 +1,18 @@
+/* styles.module.scss */
+
+.prueba {
+    position: absolute; /* Posición en la esquina superior derecha */
+    top: 20px;
+    right: 20px;
+    background-color: #1e1e1e; /* Fondo oscuro para mayor contraste */
+    color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltarlo */
+    font-weight: bold;
+    z-index: 1000;
+  }
+  
+  
+
+  

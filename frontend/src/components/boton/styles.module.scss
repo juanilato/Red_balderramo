@@ -1,0 +1,27 @@
+.caja {
+    flex: 1 1 200px; /* Permite que cada caja se ajuste automáticamente */
+    margin: 10px;
+    min-height: 100px; /* Aumenta ligeramente la altura para más espacio de texto */
+    max-width: 250px;
+    background-color: #4f4f4f; /* Color de fondo neutro */
+    padding: 20px;
+    color: #ffffff; /* Cambia el color del texto a blanco para mejor contraste */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 600; /* Aumenta el peso de la fuente para mejor visibilidad */
+    font-size: 1.1rem; /* Incrementa el tamaño de fuente */
+    font-family: Arial, sans-serif; /* Fuente más legible y moderna */
+    letter-spacing: 0.5px; /* Añade un poco de espacio entre letras */
+    line-height: 1.4; /* Mejora la separación entre líneas */
+    border-radius: 12px; /* Redondeo más suave */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra ligera pero un poco más intensa */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transición para fondo y escala */
+  
+    &:hover {
+      background-color: #303030; /* Color de fondo en hover */
+      transform: scale(1.05); /* Aumenta el tamaño en hover */
+    }
+  }
+  

@@ -1,0 +1,14 @@
+.cajagrande {
+  height: auto; /* Ajusta automáticamente la altura según el contenido */
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto; /* Centra horizontalmente */
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap; /* Permite que las cajas se ajusten automáticamente */
+}

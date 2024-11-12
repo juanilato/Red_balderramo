@@ -1,24 +1,7 @@
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/formulario/components/Loader/styles.module.scss ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.styles_spinner__ZbGWp {
-  border: 4px solid rgba(38, 37, 37, 0.5);
-  border-radius: 50%;
-  border-left-color: spin 0.8s ease infinite;
-}
-
-@keyframes styles_spin__a5AzD {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(306deg);
-  }
-}
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/dashboard/styles.module.scss ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.styles_submitButton__76K4p {
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/infousuario/styles.module.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.styles_submitButton__QmRSV {
   margin-top: 1rem;
   width: 100%;
   background: black;
@@ -33,8 +16,72 @@
   justify-content: center;
   height: 30px;
 }
-.styles_submitButton__76K4p:hover {
+.styles_submitButton__QmRSV:hover {
   background-color: white;
   color: black;
   border: 1px solid black;
+}
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/app/dashboard/styles.module.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+/* styles.module.scss */
+.styles_prueba__Zx1Tm {
+  position: absolute; /* Posición en la esquina superior derecha */
+  top: 20px;
+  right: 20px;
+  background-color: #1e1e1e; /* Fondo oscuro para mayor contraste */
+  color: #ffffff;
+  padding: 15px 25px;
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltarlo */
+  font-weight: bold;
+  z-index: 1000;
+}
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/boton/styles.module.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+.styles_caja__5L7lB {
+  flex: 1 1 200px; /* Permite que cada caja se ajuste automáticamente */
+  margin: 10px;
+  min-height: 100px; /* Aumenta ligeramente la altura para más espacio de texto */
+  max-width: 250px;
+  background-color: #4f4f4f; /* Color de fondo neutro */
+  padding: 20px;
+  color: #ffffff; /* Cambia el color del texto a blanco para mejor contraste */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600; /* Aumenta el peso de la fuente para mejor visibilidad */
+  font-size: 1.1rem; /* Incrementa el tamaño de fuente */
+  font-family: Arial, sans-serif; /* Fuente más legible y moderna */
+  letter-spacing: 0.5px; /* Añade un poco de espacio entre letras */
+  line-height: 1.4; /* Mejora la separación entre líneas */
+  border-radius: 12px; /* Redondeo más suave */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra ligera pero un poco más intensa */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transición para fondo y escala */
+}
+.styles_caja__5L7lB:hover {
+  background-color: #303030; /* Color de fondo en hover */
+  transform: scale(1.05); /* Aumenta el tamaño en hover */
+}
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/cajabotones/styles.module.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+.styles_cajagrande__A4Krr {
+  height: auto; /* Ajusta automáticamente la altura según el contenido */
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto; /* Centra horizontalmente */
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap; /* Permite que las cajas se ajusten automáticamente */
 }

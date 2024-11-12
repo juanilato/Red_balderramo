@@ -502,6 +502,9 @@ video {
 [hidden]:where(:not([hidden="until-found"])) {
   display: none;
 }
+.visible {
+  visibility: visible;
+}
 .flex {
   display: flex;
 }
@@ -529,4 +532,8 @@ video {
     outline: none;
     padding: 0;
     margin: 0;
+}
+
+.prueba{
+    background-color: red;
 }

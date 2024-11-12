@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "next-auth": "^4.24.10"
+    "next-auth": "^4.24.10",
+    "sass": "^1.80.6"
   },
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:studio\" ",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" ",
     "dev:backend": "cd backend && npm run start",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:studio": "cd backend && npx prisma studio"
+    "dev:frontend": "cd frontend && npm run dev"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"
