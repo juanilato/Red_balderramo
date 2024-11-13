@@ -1,0 +1,47 @@
+.form {
+    width: fit-content;
+    padding: 2rem;
+    border: 1px solid #d1d1d1;
+    border-radius: 12px;
+    min-width: 450px;
+    background-color: #f9f9f9; // Fondo claro y suave
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Sombra sutil para darle profundidad
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); // Sombra aumentada en hover
+    }
+
+    .descriptionContainer {
+        text-align: left;
+        margin-bottom: 1.5rem;
+
+        h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #333; // Color de texto oscuro para un look profesional
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-weight: 400;
+            font-size: 1rem;
+            color: #555; // Color de texto más claro para la descripción
+            line-height: 1.5;
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; // Espacio entre los campos del formulario
+    }
+}
+
+.errorMessage {
+    color: #d9534f; // Rojo más sutil para el mensaje de error
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+

@@ -1,5 +1,5 @@
 'use client';
-import { Form } from '../components/formulario/index.tsx';
+import { Form } from '../components/iniciodesesion/index';
 import React from "react";
 
 
@@ -9,7 +9,7 @@ export default function HomePage() {
     return (
         <main>
         <div>
-            <Form title="Login" description="Ingrese sus datos">
+            <Form title="Inicio de sesion" description="Ingrese sus datos">
                 <Form.Input name="username" placeholder="Usuario" />
                 <Form.Input name="password" type="password" placeholder="Contraseña" />
                 <Form.SubmitButtom buttonText="Ingresar">Login</Form.SubmitButtom>

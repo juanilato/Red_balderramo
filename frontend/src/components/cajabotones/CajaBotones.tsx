@@ -13,6 +13,7 @@ const CajaBotones: React.FC<CajaBotonesProps> = ({ clientData }) => {
       <Caja label="Crear tarea" path="/ruta1" />
       <Caja label="Ver tareas" path="/ruta2" />
       <Caja label="otro" path="/ruta2" />
+      
 
       {/* Caja 3, solo visible para usuarios con rol de "jefe" */}
       {clientData?.rol === 'jefe' && (

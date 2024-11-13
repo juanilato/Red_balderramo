@@ -1,5 +1,5 @@
 import React from 'react'
-import { Loader } from '../formulario/components/Loader/index'
+import { Loader } from '../iniciosesion/components/Loader/index'
 import styles from './styles.module.scss'
 
  interface SubmitButtomProps{
