@@ -51,7 +51,7 @@ const CajaBotones: React.FC = () => {
       ) : (
         <>
           <Caja label="Crear tarea" path="/dashboard/jefe/crearTarea" />
-          <Caja label="Ver tareas" path="/ruta2" />
+          <Caja label="Ver tareas" path="/dashboard/vertarea" />
           <Caja label="otro" path="/ruta2" />
           
           {/* Caja 3, solo visible para usuarios con rol de "jefe" */}

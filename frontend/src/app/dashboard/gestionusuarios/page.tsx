@@ -5,6 +5,7 @@ import CreateUserButton from "../../../components/botones/CreateUserButton";
 import SaveChangesButton from "../../../components/botones/SaveChangesButton";
 import DeleteUserButton from "../../../components/botones/DeleteUserButton";
 import styles from './styles.module.scss';
+import React from "react";
 
 interface ClientData {
   rol: string;
