@@ -4,6 +4,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import styles from './styles.module.scss';
 import CajaBotones from '../../components/cajabotones/CajaBotones';
+import React from "react";
 
 interface ClientData {
   rol: string;
