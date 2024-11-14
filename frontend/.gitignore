@@ -4,6 +4,10 @@
 node_modules/
 /build
 
+
+#Neext la concha de tu madre
+.next/
+
 # Logs
 logs
 *.log
@@ -16,6 +20,9 @@ lerna-debug.log*
 # OS
 .DS_Store
 
+# NEXT
+.next/
+.next
 # Tests
 /coverage
 /.nyc_output

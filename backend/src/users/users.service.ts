@@ -12,6 +12,17 @@ export class UserService {
   //crea un objeto de prisma para manejar la base de datos 
   constructor(private prisma: PrismaService) {}
 
+  // muestra todos los usuarios usando prisma
+  async showUsers() {
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        usuario: true,
+        rol: true,
+        password:true,
+      },
+    });
+  }
 
   //crea usuario (usuario, rol, contraseña)
   async createUser(data: CreateUserDto) {
@@ -27,6 +38,7 @@ export class UserService {
       where: { id },  
     });
   }
+  
   //muestra un solo usuario según su id
   async showUser(id: number){
     return this.prisma.user.findUnique({
@@ -55,19 +67,6 @@ export class UserService {
     });
   }
 
-
-
-  // muestra todos los usuarios usando prisma
-
-  async showUsers(){
-    return this.prisma.user.findMany({
-      include:{
-        forms: true, 
-      }
-    });
-  }
-
-  
 }
 
 
