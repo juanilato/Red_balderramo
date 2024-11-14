@@ -76,6 +76,22 @@ import {
     broadcastNotification(message: string) {
       this.server.emit('newNotification', { message });
     }
+
+    
+    // Método para emitir cambio a un solo formulario
+    sendFormUpdate(formId: number, formData: any) {
+      this.server.emit(`formUpdate-${formId}`, formData);
+    }
+  
+    // Método para emitir cambios a todos los formularios
+    broadcastFormUpdate(formData: any) {
+      this.server.emit('formUpdate', formData); 
+    }
+
+    createForm(formData: any){
+      this.server.emit(`formCreated`, formData);
+      
+    }
     
   }
   

@@ -31,6 +31,9 @@ export class UserService {
   async showUser(id: number){
     return this.prisma.user.findUnique({
       where: { id },
+      include: {
+        forms: true,  
+      },
     })
   }
 

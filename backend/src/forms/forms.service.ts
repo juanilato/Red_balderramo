@@ -2,12 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
 import {PrismaService} from '../../prisma/prisma.service';
+import { UpdateGateway } from 'src/update.gateway';
 
 
+export interface Form {
+  id: number;
+  title: string;
+  description: string | null;  
+  userId: number | null;       
+  createdAt: Date;
+}
 @Injectable()
 export class FormsService {
-  constructor(private prisma: PrismaService) {}
-
+  constructor( private prisma: PrismaService,
+    private readonly updateGateway: UpdateGateway,
+  ){}
+  
 
   //crea formulario con los datos ingresados
   async createForm(data: CreateFormDto) {
@@ -20,13 +30,14 @@ export class FormsService {
         },
       },
     });
-  
+
+    this.updateGateway.createForm(createdForm);
     return createdForm;  
 
   }
   
   //Busca todos los legajos del id del usuario (userId)
-  async findAll(userId: number) {
+  async findAll(userId: number) : Promise<Form[]> {
     const forms = await this.prisma.form.findMany({
       where: { userId : userId },
     });
@@ -57,10 +68,13 @@ export class FormsService {
 
   // Recibe id y data a modificar(datos opcionales) y modifica los datos del legajo correspondiente
   async update(id: number, data: UpdateFormDto) {
-    this.prisma.form.update({
+    await this.prisma.form.update({
       where: {id},
       data,
     });
+
+    this.updateGateway.sendFormUpdate(id, data);
+
     return `Módificaste el legajo número #${id} `;
   }
 

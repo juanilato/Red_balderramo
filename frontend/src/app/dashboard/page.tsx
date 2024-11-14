@@ -1,57 +1,84 @@
-"use client"; // Indica que este es un componente del lado del cliente
+"use client";
 
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import ClientInfo from "../../components/dashboard/infoCliente";
 import { Loader } from "../../components/formulario/components/Loader";
 import { SubmitButtom } from "../../components/dashboard/SubmitButton";
-import io from 'socket.io-client';
-import React from 'react';
+import io from "socket.io-client";
+import React from "react";
 import "./styles.scss";
 
-
+interface FormData {
+  id: number;
+  title: string;
+  description: string;
+  assignedUser: string;
+}
 
 const DashboardPage = () => {
   const { data: session, status } = useSession();
   const [clientData, setClientData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<string[]>([]);
+  const [formsData, setFormsData] = useState<{ [key: string]: FormData }>({});
+  const [formIds, setFormIds] = useState<string[]>([]); // Almacena los IDs de los formularios
 
+  // Función para obtener formularios
+  const fetchForms = async () => {
+    if (!session?.user) return;
 
+    const userId = (session.user as { id: string }).id;
+    const token = (session.user as { token: string }).token;
 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${userId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (res.ok) {
+      const forms = await res.json();
+      console.log("Formulario recibido:", forms); // Verifica los datos
+      setFormIds(forms.map((form: { id: string }) => form.id)); // Asignar los IDs de los formularios
+      setFormsData(
+        forms.reduce((acc: any, form: any) => {
+          acc[form.id] = form; // Asignar cada formulario al estado con su ID
+          return acc;
+        }, {})
+      );
+    } else {
+      console.error("No se pudieron obtener los formularios");
+    }
+  };
 
   // Efecto para cargar datos del cliente
   useEffect(() => {
-    if (status === "loading") return; // Espera a que la sesión se cargue
+    if (status === "loading") return;
     if (!session?.user) {
-      window.location.href = "/"; // Redirige a login si no está autenticado
+      window.location.href = "/";
       return;
     }
 
-    // Función para obtener los datos del cliente desde el backend
     const fetchClientData = async () => {
       try {
         setLoading(true);
         const userId = (session.user as { id: string; token: string }).id;  
-        const token =  (session.user as { id: string; token: string }).token; 
-        
+        const token = (session.user as { id: string; token: string }).token;  
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
-          method: "GET",
           headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         });
 
-        if (!res.ok) {
-          throw new Error('Error al obtener los datos del cliente');
+        if (res.ok) {
+          const data = await res.json();
+          setClientData(data);
+        } else {
+          console.error("Error al obtener los datos del cliente");
         }
-
-        const data = await res.json();
-        setClientData(data);
       } catch (error) {
         console.error("Error:", error);
-        alert("No se pudo obtener los datos del cliente.");
       } finally {
         setLoading(false);
       }
@@ -60,44 +87,50 @@ const DashboardPage = () => {
     fetchClientData();
   }, [session, status]);
 
-  // Conexión WebSocket solo si la sesión está cargada y el usuario está autenticado
+  // Efecto para cargar los formularios de un usuario
   useEffect(() => {
-    if (status === "authenticated" && session?.user) {
-      const userId = (session.user as { id: string }).id;
-
-      const socket = io('http://localhost:4000', {
-        transports: ['websocket'],
-        query: { userId },
-      });
-
-      socket.on('connect', () => {
-        console.log('Conectado al servidor de WebSocket con ID:', socket.id);
-      });
-
-      socket.on('connect_error', (error) => {
-        console.log('Error al conectar con el servidor WebSocket:', error);
-      });
-
-      socket.on('newNotification', (notification) => {
-        console.log("Notificación recibida:", notification);
-        
-        const message = notification.message;
-
-        setNotifications((prev) => [...prev, notification.message]);
-        
-        setTimeout(() => {
-          setNotifications((prev) => prev.filter((msg) => msg !== message));
-        }, 5000); 
-
-      });
-
-      // Limpieza del listener al desmontar el componente
-      return () => {
-        socket.disconnect();
-      };
-    }
+    fetchForms(); // Llamar a la función fetchForms inicialmente
   }, [session, status]);
 
+  // Conexión WebSocket
+  useEffect(() => {
+    const socket = io("http://localhost:4000", {
+      transports: ["websocket"],
+    });
+
+    // Escuchar actualizaciones de formularios
+    formIds.forEach((formId) => {
+      socket.on(`formUpdate-${formId}`, (updatedData: FormData) => {
+        setFormsData((prevState) => ({
+          ...prevState,
+          [formId]: updatedData,
+        }));
+      });
+    });
+
+    // Escuchar cuando un formulario ha sido creado
+    socket.on("formCreated", (newForm: FormData) => {
+      console.log("Nuevo formulario creado:", newForm);
+      fetchForms();
+
+      // Agregar una notificación
+      setNotifications((prevState) => [
+        ...prevState,
+        `Nuevo formulario creado con ID: ${newForm.id}`,
+      ]);
+    });
+
+    return () => {
+      // Limpiar los eventos al desmontar el componente
+      formIds.forEach((formId) => {
+        socket.off(`formUpdate-${formId}`);
+      });
+      socket.off("formCreated"); // Limpiar también el evento de 'formCreated'
+      socket.disconnect();
+    };
+  }, [formIds]);
+
+  // Mostrar formularios y notificaciones
   return (
     <div>
       {loading ? (
@@ -105,26 +138,39 @@ const DashboardPage = () => {
       ) : (
         clientData && (
           <>
-            <ClientInfo clientData={clientData} />
-            <div
-              style={{
-                backgroundColor: (clientData as { rol: string }).rol === 'jefe' ? 'green' : 'red',
-                color: 'white',
-              }}
-            >
-              <h1>{(clientData as { rol: string }).rol === 'jefe' ? 'Bienvenido, Jefe' : 'Bienvenido, Empleado'}</h1>
-            </div>
-            
-            {/* Sección de notificaciones */}
             <div className="notifications-container">
               {notifications.map((msg, index) => (
                 <div key={index} className="notification">{msg}</div>
               ))}
             </div>
+
+            <div>
+              {formIds.map((formId) => (
+                <div key={formId}>
+                  <h3>Formulario {formId}</h3>
+                  <form>
+                    <div>
+                      <label>Título</label>
+                      <input
+                        type="text"
+                        value={formsData[formId]?.title || ""}
+                        readOnly
+                      />
+                    </div>
+                    <div>
+                      <label>Descripción</label>
+                      <textarea
+                        value={formsData[formId]?.description || ""}
+                        readOnly
+                      />
+                    </div>
+                  </form>
+                </div>
+              ))}
+            </div>
           </>
         )
       )}
-      
       <SubmitButtom buttonText="Salir" onClick={signOut} isLoading={loading}>
         Salir
       </SubmitButtom>

@@ -3,6 +3,14 @@ import { FormsService } from './forms.service';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
 
+
+export interface Form {
+  id: number;
+  title: string;
+  description: string | null;  
+  userId: number | null;       
+  createdAt: Date;
+}
 @Controller('forms')
 export class FormsController {
   constructor(private readonly formsService: FormsService) {}
@@ -15,7 +23,7 @@ export class FormsController {
 
   //Muestra todos los legajos del usuario (userId)
   @Get(':userId')
-  async findAll(@Param('userId') userId: string) {
+  async findAll(@Param('userId') userId: string): Promise<Form[]> {
     const parsedUserId = parseInt(userId, 10);
     return this.formsService.findAll(parsedUserId);  
   }
