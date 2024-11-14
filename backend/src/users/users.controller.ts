@@ -7,7 +7,6 @@ export class UsersController {
   //crea objeto de servicio
   constructor(
     private readonly usersService: UserService,
-     
   ) {}
   //mediante el get de all permite visualizar todos los usuarios en la base de datos
   @Get("all")
@@ -41,7 +40,6 @@ async showUsers() {
     const userId = parseInt(id, 10);
     return this.usersService.updateUser(userId, data);
   }
-
 
 
 

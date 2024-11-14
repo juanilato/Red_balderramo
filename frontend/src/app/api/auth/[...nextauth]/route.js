@@ -26,12 +26,21 @@ const handler = NextAuth({
             }
             );
             const user = await res.json();
+            console.log(user)
            
             if (user.error) throw user;
             return user;
       },
     }),
   ],
+  // Le brinda tiempo de vida a la sesion
+  session: {
+    strategy: "jwt",
+    maxAge: 12 * 60 * 60,  // 12 horas
+  },
+  jwt: {
+    maxAge: 12 * 60 * 60, // 12 horas
+  },
   //callbacks para poder solicitar la devolución por parte del backend del jwt
   callbacks:{
     //captura toda la información de la sesión
