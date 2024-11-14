@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
 import {PrismaService} from '../../prisma/prisma.service';
+import { Form } from '@prisma/client';
 
 
 @Injectable()
 export class FormsService {
+  formRepository: any;
   constructor(private prisma: PrismaService) {}
 
 
@@ -56,21 +58,54 @@ export class FormsService {
 
 
   // Recibe id y data a modificar(datos opcionales) y modifica los datos del legajo correspondiente
-  async update(id: number, data: UpdateFormDto) {
-    this.prisma.form.update({
-      where: {id},
-      data,
-    });
-    return `Módificaste el legajo número #${id} `;
+  async update(formId: number, updateFormDto: UpdateFormDto): Promise<Form> {
+    try {
+      const form = await this.prisma.form.findUnique({
+        where: { id: formId },
+      });
+
+      if (!form) {
+        throw new NotFoundException('Formulario no encontrado');
+      }
+
+      return await this.prisma.form.update({
+        where: { id: formId },
+        data: updateFormDto,
+      });
+    } catch (error) {
+      // Usamos excepciones específicas de NestJS para manejar errores
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException('Error al actualizar el formulario');
+    }
   }
 
+  
+  
+  
+
 //borra legajo según el id recibido
-  async remove(id: number) {
-    await this.prisma.form.delete({
-      where: {id}
+// form.service.ts
+
+async remove(formId: number): Promise<Form> {
+  try {
+    const form = await this.prisma.form.findUnique({
+      where: { id: formId },
     });
-    return `Borraste el legajo número #${id}`;
+
+    if (!form) {
+      throw new NotFoundException('Formulario no encontrado');
+    }
+
+    return await this.prisma.form.delete({
+      where: { id: formId },
+    });
+  } catch (error) {
+    throw new InternalServerErrorException('Error al eliminar el formulario');
   }
+}
+
 
   async UpdateFormUser(id:number, userId:number){
     await this.prisma.form.update({

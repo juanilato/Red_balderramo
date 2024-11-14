@@ -1,0 +1,162 @@
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/app/dashboard/jefe/crearTarea/styles.module.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.styles_taskPage___aNyF {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.styles_title__u2MO5 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.styles_searchContainer__Nn_mY {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.styles_searchInput__HF_GN {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+}
+.styles_searchInput__HF_GN:focus {
+  border-color: #007bff;
+}
+
+.styles_employeeDropdown__cM8mg {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.styles_employeeItem__M3IOc {
+  padding: 10px;
+  cursor: pointer;
+}
+.styles_employeeItem__M3IOc:hover {
+  background-color: #f1f1f1;
+}
+
+.styles_formSection__ShwMm {
+  margin-top: 20px;
+}
+
+.styles_formTitle__1crcN {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.styles_formSearchContainer__iFaxh {
+  margin-bottom: 10px;
+}
+
+.styles_formSearchInput__p3Tjj {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+}
+.styles_formSearchInput__p3Tjj:focus {
+  border-color: #007bff;
+}
+
+.styles_formList__HMVpX {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.styles_formItem__dSjHB {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.styles_formContent__r4FDR {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.styles_formActions__krxIl {
+  display: flex;
+  gap: 10px;
+}
+
+.styles_editButton__7XPqa {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.styles_editButton__7XPqa:hover {
+  background-color: #45a049;
+}
+
+.styles_deleteButton__D5SGv {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.styles_deleteButton__D5SGv:hover {
+  background-color: #e53935;
+}
+
+.styles_createForm__1_X22 {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.styles_inputField__tcd2g {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.styles_textArea__3KVBU {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.styles_submitButton__ANGAl {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.styles_submitButton__ANGAl:hover {
+  background-color: #0056b3;
+}

@@ -10,7 +10,7 @@ interface CajaBotonesProps {
 const CajaBotones: React.FC<CajaBotonesProps> = ({ clientData }) => {
   return (
     <div className={styles.cajagrande}>
-      <Caja label="Crear tarea" path="/ruta1" />
+      <Caja label="Crear tarea" path="http://localhost:3000/dashboard/jefe/crearTarea" />
       <Caja label="Ver tareas" path="/ruta2" />
       <Caja label="otro" path="/ruta2" />
       
