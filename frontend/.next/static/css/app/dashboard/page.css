@@ -1,48 +1,8 @@
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/infousuario/styles.module.scss ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.styles_submitButton__QmRSV {
-  margin-top: 1rem;
-  width: 100%;
-  background: black;
-  color: white;
-  text-align: center;
-  border-radius: 6px;
-  padding: 0.4rem 0;
-  border: 1px solid transparent;
-  transition-duration: 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-}
-.styles_submitButton__QmRSV:hover {
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-}
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/app/dashboard/styles.module.scss ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/botones/styles.module.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
-/* styles.module.scss */
-.styles_prueba__Zx1Tm {
-  position: absolute; /* Posición en la esquina superior derecha */
-  top: 20px;
-  right: 20px;
-  background-color: #1e1e1e; /* Fondo oscuro para mayor contraste */
-  color: #ffffff;
-  padding: 15px 25px;
-  border-radius: 8px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltarlo */
-  font-weight: bold;
-  z-index: 1000;
-}
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/boton/styles.module.scss ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-@charset "UTF-8";
-.styles_caja__5L7lB {
+.styles_caja__RRoN8 {
   flex: 1 1 200px; /* Permite que cada caja se ajuste automáticamente */
   margin: 10px;
   min-height: 100px; /* Aumenta ligeramente la altura para más espacio de texto */
@@ -63,9 +23,63 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra ligera pero un poco más intensa */
   transition: background-color 0.3s ease, transform 0.2s ease; /* Transición para fondo y escala */
 }
-.styles_caja__5L7lB:hover {
+.styles_caja__RRoN8:hover {
   background-color: #303030; /* Color de fondo en hover */
   transform: scale(1.05); /* Aumenta el tamaño en hover */
+}
+
+/* Estilo para el botón de "Crear" */
+.styles_crear__2ycsB {
+  background-color: #007bff; /* Azul */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.styles_crear__2ycsB:hover {
+  background-color: #0056b3; /* Azul más oscuro al hacer hover */
+}
+.styles_crear__2ycsB:focus {
+  outline: none;
+}
+
+/* Estilo para el botón de "Borrar" */
+.styles_borrar__Aorrn {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.styles_borrar__Aorrn:hover {
+  background-color: #c82333; /* Rojo más oscuro al hacer hover */
+}
+.styles_borrar__Aorrn:focus {
+  outline: none;
+}
+
+/* Estilo para el botón de "Guardar" */
+.styles_guardar__7EDFS {
+  background-color: #28a745; /* Verde */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.styles_guardar__7EDFS:hover {
+  background-color: #218838; /* Verde más oscuro al hacer hover */
+}
+.styles_guardar__7EDFS:focus {
+  outline: none;
 }
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/cajabotones/styles.module.scss ***!

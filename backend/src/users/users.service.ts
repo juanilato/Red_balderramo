@@ -59,13 +59,17 @@ export class UserService {
 
   // muestra todos los usuarios usando prisma
 
-  async showUsers(){
+  async showUsers() {
     return this.prisma.user.findMany({
-      include:{
-        forms: true, 
-      }
+      select: {
+        id: true,
+        usuario: true,
+        rol: true,
+        password:true,
+      },
     });
   }
+  
 
   
 }

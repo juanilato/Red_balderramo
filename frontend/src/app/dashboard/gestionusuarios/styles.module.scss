@@ -1,0 +1,82 @@
+/* src/app/gestionusuarios/styles.module.scss */
+
+.prueba {
+  position: absolute; /* Posición en la esquina superior derecha */
+  top: 20px;
+  right: 20px;
+  background-color: #1e1e1e; /* Fondo oscuro para mayor contraste */
+  color: #ffffff;
+  padding: 15px 25px;
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltarlo */
+  font-weight: bold;
+  z-index: 1000;
+}
+
+.pageContainer {
+  font-family: 'Roboto', sans-serif;
+  padding: 20px;
+  background-color: #f4f7fa;
+}
+
+
+.listaUsuarios {
+  margin-top: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.listaUsuarios h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.table th {
+  background-color: rgb(230, 0, 0);
+  color: white;
+  font-weight: bold;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.table td {
+  color: #555;
+}
+
+.table td, .table th {
+  border-bottom: 1px solid #ddd;
+}
+
+.table td {
+  text-transform: capitalize;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 20px; /* Espacio entre los botones */
+  margin-bottom: 20px; /* Añade separación debajo del contenedor de botones */
+}
