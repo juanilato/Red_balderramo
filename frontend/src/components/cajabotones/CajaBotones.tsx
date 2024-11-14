@@ -50,7 +50,7 @@ const CajaBotones: React.FC = () => {
         <div>Cargando...</div>
       ) : (
         <>
-          <Caja label="Crear tarea" path="/ruta1" />
+          <Caja label="Crear tarea" path="/dashboard/jefe/crearTarea" />
           <Caja label="Ver tareas" path="/ruta2" />
           <Caja label="otro" path="/ruta2" />
           

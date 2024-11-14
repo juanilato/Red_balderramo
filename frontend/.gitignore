@@ -4,6 +4,10 @@
 node_modules/
 /build
 
+
+#Neext la concha de tu madre
+.next/
+
 # Logs
 logs
 *.log

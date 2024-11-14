@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { FormsService } from './forms.service';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
@@ -45,16 +45,43 @@ export class FormsController {
   }
 
   // Ruta para actualizar un formulario
-  @Patch(':id')
+  @Patch('/:id')
   async update(@Param('id') id: string, @Body() updateFormDto: UpdateFormDto) {
     const parsedFormId = parseInt(id, 10);
-    return this.formsService.update(+parsedFormId, updateFormDto);
-  }
 
-  // Ruta para eliminar un formulario
-  @Delete(':id')
-  async remove(@Param('id') id: string) {
-    const parsedFormId = parseInt(id, 10);
-    return this.formsService.remove(+parsedFormId);  
+    try {
+      const updatedForm = await this.formsService.update(parsedFormId, updateFormDto);
+      return updatedForm;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      // Aseguramos que `error` es de tipo `Error` para acceder a `message`
+      const err = error as Error;
+      throw new InternalServerErrorException(err.message || "Error al actualizar el formulario");
+    }
   }
+  
+  
+// Ruta para eliminar un formulario
+
+@Delete('/:id')
+async remove(@Param('id') id: string) {
+  const parsedFormId = parseInt(id, 10);
+
+  try {
+    const deletedForm = await this.formsService.remove(parsedFormId);
+    return { message: "Formulario eliminado exitosamente", form: deletedForm };
+  } catch (error) {
+    if (error instanceof NotFoundException) {
+      throw error;
+    }
+
+    // Convertimos `error` a `Error` para acceder a `message`
+    const err = error as Error;
+    throw new InternalServerErrorException(err.message || "Error al eliminar el formulario");
+  }
+}
+  
 }

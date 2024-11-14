@@ -29,16 +29,17 @@
       "static/css/app/dashboard/page.css",
       "static/chunks/app/dashboard/page.js"
     ],
+    "/dashboard/jefe/crearTarea/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/dashboard/jefe/crearTarea/page.css",
+      "static/chunks/app/dashboard/jefe/crearTarea/page.js"
+    ],
     "/dashboard/gestionusuarios/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/dashboard/gestionusuarios/page.css",
       "static/chunks/app/dashboard/gestionusuarios/page.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

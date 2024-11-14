@@ -4,6 +4,7 @@ import { ReactNode, useState, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import InfoUsuario from '../../components/infousuario/infoUsuario';
 import styles from './styles.module.scss'; // Archivo de estilos específico para el dashboard
+import React from 'react';
 
 interface DashboardLayoutProps {
   children: ReactNode;
