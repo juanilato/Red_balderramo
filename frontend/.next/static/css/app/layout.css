@@ -543,6 +543,9 @@ video {
 .flex {
   display: flex;
 }
+.table {
+  display: table;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -560,6 +563,9 @@ video {
 }
 .p-24 {
   padding: 6rem;
+}
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }    
 
 *{

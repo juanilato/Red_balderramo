@@ -9,7 +9,14 @@ export class UsersController {
     private readonly usersService: UserService,
      
   ) {}
-
+  //mediante el get de all permite visualizar todos los usuarios en la base de datos
+  @Get("all")
+async showUsers() {
+  const users = await this.usersService.showUsers();
+  // Mapear los usuarios para devolver solo id, usuario y rol
+  return users;
+  }
+  
   @Get(":id")
   async showUser(@Param('id') id: string){
     const user = await this.usersService.showUser(+id);
@@ -36,10 +43,6 @@ export class UsersController {
   }
 
 
-  //mediante el get de all permite visualizar todos los usuarios en la base de datos
-  @Get("all")
-  async showUsers(){
-    return this.usersService.showUsers();
-  }
+
 
 }

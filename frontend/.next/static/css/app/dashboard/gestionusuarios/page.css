@@ -1,0 +1,167 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/components/botones/styles.module.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+.styles_caja__RRoN8 {
+  flex: 1 1 200px; /* Permite que cada caja se ajuste automáticamente */
+  margin: 10px;
+  min-height: 100px; /* Aumenta ligeramente la altura para más espacio de texto */
+  max-width: 250px;
+  background-color: #4f4f4f; /* Color de fondo neutro */
+  padding: 20px;
+  color: #ffffff; /* Cambia el color del texto a blanco para mejor contraste */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600; /* Aumenta el peso de la fuente para mejor visibilidad */
+  font-size: 1.1rem; /* Incrementa el tamaño de fuente */
+  font-family: Arial, sans-serif; /* Fuente más legible y moderna */
+  letter-spacing: 0.5px; /* Añade un poco de espacio entre letras */
+  line-height: 1.4; /* Mejora la separación entre líneas */
+  border-radius: 12px; /* Redondeo más suave */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra ligera pero un poco más intensa */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transición para fondo y escala */
+}
+.styles_caja__RRoN8:hover {
+  background-color: #303030; /* Color de fondo en hover */
+  transform: scale(1.05); /* Aumenta el tamaño en hover */
+}
+
+/* Estilo para el botón de "Crear" */
+.styles_crear__2ycsB {
+  background-color: #007bff; /* Azul */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.styles_crear__2ycsB:hover {
+  background-color: #0056b3; /* Azul más oscuro al hacer hover */
+}
+.styles_crear__2ycsB:focus {
+  outline: none;
+}
+
+/* Estilo para el botón de "Borrar" */
+.styles_borrar__Aorrn {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.styles_borrar__Aorrn:hover {
+  background-color: #c82333; /* Rojo más oscuro al hacer hover */
+}
+.styles_borrar__Aorrn:focus {
+  outline: none;
+}
+
+/* Estilo para el botón de "Guardar" */
+.styles_guardar__7EDFS {
+  background-color: #28a745; /* Verde */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.styles_guardar__7EDFS:hover {
+  background-color: #218838; /* Verde más oscuro al hacer hover */
+}
+.styles_guardar__7EDFS:focus {
+  outline: none;
+}
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[7].use[5]!./src/app/dashboard/gestionusuarios/styles.module.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+/* src/app/gestionusuarios/styles.module.scss */
+.styles_prueba__2VMp6 {
+  position: absolute; /* Posición en la esquina superior derecha */
+  top: 20px;
+  right: 20px;
+  background-color: #1e1e1e; /* Fondo oscuro para mayor contraste */
+  color: #ffffff;
+  padding: 15px 25px;
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltarlo */
+  font-weight: bold;
+  z-index: 1000;
+}
+
+.styles_pageContainer__gdod3 {
+  font-family: "Roboto", sans-serif;
+  padding: 20px;
+  background-color: #f4f7fa;
+}
+
+.styles_listaUsuarios__YZLtQ {
+  margin-top: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.styles_listaUsuarios__YZLtQ h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.styles_table__ELYRM {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.styles_table__ELYRM th,
+.styles_table__ELYRM td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.styles_table__ELYRM th {
+  background-color: rgb(230, 0, 0);
+  color: white;
+  font-weight: bold;
+}
+
+.styles_table__ELYRM tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.styles_table__ELYRM tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.styles_table__ELYRM td {
+  color: #555;
+}
+
+.styles_table__ELYRM td, .styles_table__ELYRM th {
+  border-bottom: 1px solid #ddd;
+}
+
+.styles_table__ELYRM td {
+  text-transform: capitalize;
+}
+
+.styles_buttonContainer__S_Tun {
+  display: flex;
+  gap: 20px; /* Espacio entre los botones */
+  margin-bottom: 20px; /* Añade separación debajo del contenedor de botones */
+}

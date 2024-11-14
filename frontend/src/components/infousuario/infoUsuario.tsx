@@ -18,7 +18,7 @@ const InfoUsuario: React.FC<InfoUsuarioProps> = ({ clientData, signOut }) => {
           
         </>
       )}
-      <SubmitButtom buttonText="Salir" onClick={signOut}>
+      <SubmitButtom buttonText="Cerrar sesion" onClick={signOut}>
         Salir
       </SubmitButtom>
     </div>
