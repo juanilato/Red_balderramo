@@ -6,8 +6,7 @@ import { Loader } from "../../../components/iniciodesesion/components/Loader";
 import InfoUsuario from '../../../components/infousuario/infoUsuario';
 import io from "socket.io-client";
 import React from "react";
-import style from './styles.module.scss';
-
+import styles from './styles.module.scss';
 
 interface FormData {
   id: number;
@@ -20,9 +19,10 @@ const DashboardPage = () => {
   const { data: session, status } = useSession();
   const [clientData, setClientData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [notifications, setNotifications] = useState<string[]>([]);
+  const [notifications, setNotifications] = useState<{ id: number; message: string }[]>([]);
   const [formsData, setFormsData] = useState<{ [key: string]: FormData }>({});
-  const [formIds, setFormIds] = useState<string[]>([]); // Almacena los IDs de los formularios
+  const [formIds, setFormIds] = useState<string[]>([]); 
+
 
   // Función para obtener formularios
   const fetchForms = async () => {
@@ -40,11 +40,11 @@ const DashboardPage = () => {
 
     if (res.ok) {
       const forms = await res.json();
-      console.log("Formulario recibido:", forms); // Verifica los datos
-      setFormIds(forms.map((form: { id: string }) => form.id)); // Asignar los IDs de los formularios
+
+      setFormIds(forms.map((form: { id: string }) => form.id)); 
       setFormsData(
         forms.reduce((acc: any, form: any) => {
-          acc[form.id] = form; // Asignar cada formulario al estado con su ID
+          acc[form.id] = form; 
           return acc;
         }, {})
       );
@@ -53,7 +53,27 @@ const DashboardPage = () => {
     }
   };
 
+  const addNotification = (message: string) => {
+    const generateUniqueId = () => Date.now() + Math.random().toString(36).slice(2);
+
+    const id = parseInt(generateUniqueId());
+
+    setNotifications((prevState) => [...prevState, { id, message }]);
+
+    // Eliminar la notificación automáticamente después de 5 segundos
+    
+    setTimeout(() => {
+      removeNotification(id);
+    }, 5000);
+  
+  };
+
+  // Función para eliminar notificaciones
+  const removeNotification = (id: number) => {
+    setNotifications((prevState) => prevState.filter((notif) => notif.id !== id));
+  };
   // Efecto para cargar datos del cliente
+
   useEffect(() => {
     if (status === "loading") return;
     if (!session?.user) {
@@ -90,46 +110,38 @@ const DashboardPage = () => {
 
   // Efecto para cargar los formularios de un usuario
   useEffect(() => {
-    fetchForms(); // Llamar a la función fetchForms inicialmente
+    fetchForms(); 
   }, [session, status]);
 
   // Conexión WebSocket
+  
   useEffect(() => {
+    if (status === "loading" ) return;
+    const userId = (session?.user as { id: string; token: string }).id; 
     const socket = io("http://localhost:4000", {
       transports: ["websocket"],
+      query: {
+        userId: userId, 
+      },
     });
+    
+    // Escuchar cuando un formulario ha sido creado / modificado o 
 
-    // Escuchar actualizaciones de formularios
-    formIds.forEach((formId) => {
-      socket.on(`formUpdate-${formId}`, (updatedData: FormData) => {
-        setFormsData((prevState) => ({
-          ...prevState,
-          [formId]: updatedData,
-        }));
-      });
-    });
-
-    // Escuchar cuando un formulario ha sido creado
-    socket.on("formCreated", (newForm: FormData) => {
-      console.log("Nuevo formulario creado:", newForm);
-      fetchForms();
-
+    socket.on("formUpdate", (Form: FormData, message: string) => {
+   
       // Agregar una notificación
-      setNotifications((prevState) => [
-        ...prevState,
-        `Nuevo formulario creado con ID: ${newForm.id}`,
-      ]);
+      addNotification(`${message} ${Form.title}`);
+      fetchForms(); 
     });
-
+    
     return () => {
-      // Limpiar los eventos al desmontar el componente
-      formIds.forEach((formId) => {
-        socket.off(`formUpdate-${formId}`);
-      });
-      socket.off("formCreated"); // Limpiar también el evento de 'formCreated'
+      // Limpiar el evento al desmontar el componente
+      socket.off("formUpdate"); 
       socket.disconnect();
     };
-  }, [formIds]);
+  }, [session]);
+
+
 
   // Mostrar formularios y notificaciones
   return (
@@ -139,40 +151,59 @@ const DashboardPage = () => {
       ) : (
         clientData && (
           <>
-            <div className="notifications-container">
-              {notifications.map((msg, index) => (
-                <div key={index} className="notification">{msg}</div>
-              ))}
-            </div>
+            {/* Contenedor de notificaciones */}
+            <div className={styles["notifications-container"]}>
+              {notifications.map((notifications) => (
+                <div key={notifications.id} className={styles.notification}>
+                  {/* Mensaje de la notificación */}
+                  <span>{notifications.message}</span>
 
-            <div>
-              {formIds.map((formId) => (
-                <div key={formId}>
-                  <h3>Formulario {formId}</h3>
-                  <form>
-                    <div>
-                      <label>Título</label>
-                      <input
-                        type="text"
-                        value={formsData[formId]?.title || ""}
-                        readOnly
-                      />
-                    </div>
-                    <div>
-                      <label>Descripción</label>
-                      <textarea
-                        value={formsData[formId]?.description || ""}
-                        readOnly
-                      />
-                    </div>
-                  </form>
+                  {/* Botón de eliminar */}
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => {
+                      removeNotification(notifications.id);
+                    }
+                    }
+                  >
+                    X
+                  </button>
                 </div>
               ))}
             </div>
+            {/* Lista de formularios */}
+            <div className={styles.taskListContainer}>
+                {formIds.map((formId) => (
+                  <div key={formId} className={styles.taskCard}>
+                    <div className={styles.taskHeader}>
+                      <h3>Formulario {formId}</h3>
+                    </div>
+                    <form className={styles.taskForm}>
+                      <div className={styles.taskField}>
+                        <label className={styles.taskLabel}>Título</label>
+                        <input
+                          type="text"
+                          value={formsData[formId]?.title || ""}
+                          readOnly
+                          className={styles.taskInput}
+                        />
+                      </div>
+                      <div className={styles.taskField}>
+                        <label className={styles.taskLabel}>Descripción</label>
+                        <textarea
+                          value={formsData[formId]?.description || ""}
+                          readOnly
+                          className={styles.taskTextarea}
+                        />
+                      </div>
+                    </form>
+                  </div>
+                ))}
+            </div>
+
           </>
         )
       )}
-      <InfoUsuario clientData={clientData} signOut={signOut} />
     </div>
   );
 };

@@ -1,41 +1,147 @@
+/* Estilo para las notificaciones */
 .notifications-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    max-height: 400px;
-    overflow-y: auto;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 8px;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo individual de cada notificación */
+.notification {
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #4CAF50; /* Verde claro */
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between; /* Alinear el contenido */
+  align-items: center;
+  animation: slide-in 0.5s ease-out;
+}
+
+/* Estilo para el botón de eliminar */
+.deleteButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 8px;
+  margin-left: 10px;
+  transition: color 0.2s ease;
+}
+
+.deleteButton:hover {
+  color: #ff0000; /* Rojo cuando pasa el mouse */
+}
+
+/* Animación de entrada */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+
+  .taskListContainer {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se muevan a la siguiente fila si no caben */
+    gap: 20px;
+    padding: 20px;
+    background-color: #f4f4f4; /* Fondo neutro */
+    justify-content: flex-start; /* Alinea las tarjetas a la izquierda */
+    margin-top: 50px; 
   }
   
-  /* Estilo individual de cada notificación */
-  .notification {
-    padding: 12px;
-    margin-bottom: 10px;
-    background-color: #4CAF50; /* Verde claro para llamar la atención */
-    color: white;
-    border-radius: 5px;
+  .taskCard {
+    flex: 1 1 calc(33.333% - 20px); /* Ocupa un tercio del ancho disponible con espacio para el gap */
+    max-width: 250px; /* Límite máximo del ancho de la tarjeta */
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .taskCard:hover {
+    transform: translateY(-5px); /* Efecto sutil al pasar el cursor */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .taskHeader {
+    background-color: rgb(230, 0, 0); /* Rojo corporativo */
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 8px 8px 0 0;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .taskForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 0;
+  }
+  
+  .taskField {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .taskLabel {
     font-size: 14px;
-    animation: slide-in 0.5s ease-out; /* Animación de entrada */
+    color: #555555;
+    font-weight: bold;
+    margin-bottom: 5px;
   }
   
-  .notification:last-child {
-    margin-bottom: 0;
+  .taskInput,
+  .taskTextarea {
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    color: #333333;
+    resize: none; /* Evita que los usuarios cambien el tamaño del textarea */
   }
   
-  /* Animación de entrada */
-  @keyframes slide-in {
-    from {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
+  .taskInput:read-only,
+  .taskTextarea:read-only {
+    background-color: #eeeeee; /* Indica que es de solo lectura */
+    cursor: not-allowed;
+  }
+  
+  .taskInput:focus,
+  .taskTextarea:focus {
+    outline: none;
+    border-color: rgb(230, 0, 0); /* Destaca el campo al enfocarlo */
+    box-shadow: 0 0 5px rgba(230, 0, 0, 0.4);
+  }
+  
+  /* Media query para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .taskCard {
+      flex: 1 1 100%; /* Ocupa el 100% del ancho disponible en pantallas pequeñas */
     }
   }
   

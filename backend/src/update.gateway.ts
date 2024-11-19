@@ -66,7 +66,7 @@ import {
       const clientSocketId = this.activeUsers.get(userId);
       this.printActiveUsers();
       if (clientSocketId) {
-        this.server.to(clientSocketId).emit('newNotification', { message });
+        this.server.to(clientSocketId).emit('formUpdate', { message });
       } else {
         console.log(`No se encontró un socket para el usuario ${userId}`);
       }
@@ -77,20 +77,26 @@ import {
       this.server.emit('newNotification', { message });
     }
 
-    
-    // Método para emitir cambio a un solo formulario
-    sendFormUpdate(formId: number, formData: any) {
-      this.server.emit(`formUpdate-${formId}`, formData);
-    }
-  
-    // Método para emitir cambios a todos los formularios
-    broadcastFormUpdate(formData: any) {
-      this.server.emit('formUpdate', formData); 
-    }
+    //Método para comprobar que el formulario le corresponde
+    formUserRelation(form: any){
 
-    createForm(formData: any){
-      this.server.emit(`formCreated`, formData);
-      
+      const assignedUserId = form.userId; 
+
+
+
+      return this.activeUsers.get(assignedUserId);
+    }
+    
+
+
+    // Método para emitir cambio a un solo formulario
+    sendFormUpdate(formData: any, message: string) {
+      const clientSocketId = this.formUserRelation(formData);
+      if (clientSocketId){
+        
+      this.server.to(clientSocketId).emit(`formUpdate`, formData, message);
+      console.log("Mensaje emitido");
+      }
     }
     
   }

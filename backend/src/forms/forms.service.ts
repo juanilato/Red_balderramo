@@ -30,8 +30,8 @@ export class FormsService {
         },
       },
     });
-
-    this.updateGateway.createForm(createdForm);
+    const message = "Fomulario Creado: ";
+    this.updateGateway.sendFormUpdate(createdForm, message);
     return createdForm;  
 
   }
@@ -79,7 +79,8 @@ export class FormsService {
       if (!form) {
         throw new NotFoundException('Formulario no encontrado');
       }
-      this.updateGateway.sendFormUpdate(formId, updateFormDto);
+      const message = "Formulario Actualizado: ";
+      this.updateGateway.sendFormUpdate(form, message);
      
 
       return await this.prisma.form.update({
@@ -114,6 +115,9 @@ async remove(formId: number): Promise<Form> {
     if (!form) {
       throw new NotFoundException('Formulario no encontrado');
     }
+
+    const message = "Formulario Eliminado: ";
+    this.updateGateway.sendFormUpdate(form, message);
 
     return await this.prisma.form.delete({
       where: { id: formId },
