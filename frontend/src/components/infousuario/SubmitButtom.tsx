@@ -1,5 +1,5 @@
 import React from 'react'
-import { Loader } from '../iniciosesion/components/Loader/index'
+import {Loader} from '../iniciodesesion/components/Loader/index'
 import styles from './styles.module.scss'
 
  interface SubmitButtomProps{
@@ -14,7 +14,7 @@ import styles from './styles.module.scss'
 export const SubmitButtom = ({ buttonText, isLoading, onClick }: SubmitButtomProps) => {
     return (
       <button className={styles.submitButton} onClick={onClick} disabled={isLoading} >
-        {isLoading ? 'Cargando...' : buttonText}
+      {isLoading ? <Loader size={25} /> : buttonText}
       </button>
     );
   };

@@ -56,17 +56,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center">
       <div className={styles.prueba}>
-        {loading ? (
-          <div>Cargando...</div>
-        ) : (
-          clientData ? (
-            <InfoUsuario clientData={clientData} signOut={signOut} />
-          ) : (
-            <div>No se pudo obtener la información del usuario.</div>
-          )
-        )}
+        
+          <InfoUsuario clientData={clientData} signOut={signOut} />
+        
+        
       </div>
-      {children} {/* Aquí se inserta el contenido específico del dashboard */}
+      {children}
     </main>
   );
+  
 }

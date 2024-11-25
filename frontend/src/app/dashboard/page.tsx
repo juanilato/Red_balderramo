@@ -6,12 +6,14 @@ import styles from './styles.module.scss';
 import CajaBotones from '../../components/cajabotones/CajaBotones';
 import React from "react";
 
+
 interface ClientData {
   rol: string;
   nombre: string;
 }
 
 const DashboardPage = () => {
+  
   const { data: session, status } = useSession();
   const [clientData, setClientData] = useState<ClientData | null>(null); // Cambia a ClientData o null
   const [loading, setLoading] = useState(true);

@@ -31,23 +31,30 @@ const DashboardPage = () => {
     const userId = (session.user as { id: string }).id;
     const token = (session.user as { token: string }).token;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${userId}`, {
+
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${userId}`;
+
+
+    const res = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
+
       },
     });
 
     if (res.ok) {
-      const forms = await res.json();
+      const data = await res.json();
 
-      setFormIds(forms.map((form: { id: string }) => form.id)); 
-      setFormsData(
-        forms.reduce((acc: any, form: any) => {
-          acc[form.id] = form; 
-          return acc;
-        }, {})
-      );
+        // Reemplazar todos los formularios
+        setFormIds(data.map((form: { id: string }) => form.id));
+        setFormsData(
+          data.reduce((acc: any, form: any) => {
+            acc[form.id] = form;
+            return acc;
+          }, {})
+        );
+      
     } else {
       console.error("No se pudieron obtener los formularios");
     }
@@ -128,10 +135,10 @@ const DashboardPage = () => {
     // Escuchar cuando un formulario ha sido creado / modificado o 
 
     socket.on("formUpdate", (Form: FormData, message: string) => {
-   
+      fetchForms();
       // Agregar una notificación
       addNotification(`${message} ${Form.title}`);
-      fetchForms(); 
+
     });
     
     return () => {
