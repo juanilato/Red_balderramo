@@ -1,9 +1,8 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Loader } from "../../../components/iniciodesesion/components/Loader";
-import InfoUsuario from '../../../components/infousuario/infoUsuario';
 import io from "socket.io-client";
 import React from "react";
 import styles from './styles.module.scss';
@@ -17,70 +16,95 @@ interface FormData {
 
 const DashboardPage = () => {
   const { data: session, status } = useSession();
-  const [clientData, setClientData] = useState(null);
+  const [clientData, setClientData] = useState<{ forms: FormData[] } | null>(null);
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<{ id: number; message: string }[]>([]);
-  const [formsData, setFormsData] = useState<{ [key: string]: FormData }>({});
-  const [formIds, setFormIds] = useState<string[]>([]); 
+  const [formsData, setFormsData] = useState<{ [key: number]: FormData }>({});
 
 
-  // Función para obtener formularios
-  const fetchForms = async () => {
-    if (!session?.user) return;
-
-    const userId = (session.user as { id: string }).id;
-    const token = (session.user as { token: string }).token;
-
-
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${userId}`;
-
-
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-
-      },
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-
-        // Reemplazar todos los formularios
-        setFormIds(data.map((form: { id: string }) => form.id));
-        setFormsData(
-          data.reduce((acc: any, form: any) => {
-            acc[form.id] = form;
-            return acc;
-          }, {})
-        );
-      
-    } else {
-      console.error("No se pudieron obtener los formularios");
-    }
-  };
-
+  // Función para añadir una notificación
   const addNotification = (message: string) => {
     const generateUniqueId = () => Date.now() + Math.random().toString(36).slice(2);
-
     const id = parseInt(generateUniqueId());
 
     setNotifications((prevState) => [...prevState, { id, message }]);
 
     // Eliminar la notificación automáticamente después de 5 segundos
-    
     setTimeout(() => {
       removeNotification(id);
     }, 5000);
-  
   };
 
   // Función para eliminar notificaciones
   const removeNotification = (id: number) => {
     setNotifications((prevState) => prevState.filter((notif) => notif.id !== id));
   };
-  // Efecto para cargar datos del cliente
 
+  // Función para obtener los datos del cliente
+  const fetchClientData = async () => {
+    if (!session?.user) return;
+
+    try {
+      
+      
+      const userId = (session.user as { id: string; token: string }).id;
+      const token = (session.user as { token: string }).token;
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setClientData(data); // Guardar toda la información del cliente
+        setFormsData(
+          data.forms.reduce((acc: { [key: number]: FormData }, form: FormData) => {
+            acc[form.id] = form;
+            return acc;
+          }, {})
+        );
+      } else {
+        console.error("Error al obtener los datos del cliente");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Función para obtener un formulario específico
+  const fetchSingleForm = async (formId: number) => {
+    if (!session?.user) return;
+
+    try {
+      const token = (session.user as { token: string }).token;
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${formId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        const updatedForm = await res.json();
+
+        // Actualizar el estado solo para este formulario
+        setFormsData((prev) => ({
+          ...prev,
+          [formId]: updatedForm,
+        }));
+      } else {
+        console.error(`Error al obtener el formulario con ID: ${formId}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // Efecto para cargar datos iniciales del cliente
   useEffect(() => {
     if (status === "loading") return;
     if (!session?.user) {
@@ -88,67 +112,34 @@ const DashboardPage = () => {
       return;
     }
 
-    const fetchClientData = async () => {
-      try {
-        setLoading(true);
-        const userId = (session.user as { id: string; token: string }).id;  
-        const token = (session.user as { id: string; token: string }).token;  
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setClientData(data);
-        } else {
-          console.error("Error al obtener los datos del cliente");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchClientData();
   }, [session, status]);
 
-  // Efecto para cargar los formularios de un usuario
+  // Conexión WebSocket para actualizaciones en vivo
   useEffect(() => {
-    fetchForms(); 
-  }, [session, status]);
+    if (status === "loading") return;
 
-  // Conexión WebSocket
-  
-  useEffect(() => {
-    if (status === "loading" ) return;
-    const userId = (session?.user as { id: string; token: string }).id; 
+    const userId = (session?.user as { id: string }).id;
     const socket = io("http://localhost:4000", {
       transports: ["websocket"],
-      query: {
-        userId: userId, 
-      },
+      query: { userId },
     });
-    
-    // Escuchar cuando un formulario ha sido creado / modificado o 
 
-    socket.on("formUpdate", (Form: FormData, message: string) => {
-      fetchForms();
-      // Agregar una notificación
-      addNotification(`${message} ${Form.title}`);
+    socket.on("formUpdate", (updatedForm: { id: number }, message: string) => {
+      // Actualizar solo el formulario relevante
+      fetchClientData();
+      //fetchSingleForm(updatedForm.id); Debería arreglarse pero no se como  =(
 
+
+      // Añadir notificación
+      addNotification(`${message} Formulario ID: ${updatedForm.id}`);
     });
-    
+
     return () => {
-      // Limpiar el evento al desmontar el componente
-      socket.off("formUpdate"); 
+      socket.off("formUpdate");
       socket.disconnect();
     };
-  }, [session]);
-
-
+  }, [status, session]);
 
   // Mostrar formularios y notificaciones
   return (
@@ -160,53 +151,51 @@ const DashboardPage = () => {
           <>
             {/* Contenedor de notificaciones */}
             <div className={styles["notifications-container"]}>
-              {notifications.map((notifications) => (
-                <div key={notifications.id} className={styles.notification}>
+              {notifications.map((notification) => (
+                <div key={notification.id} className={styles.notification}>
                   {/* Mensaje de la notificación */}
-                  <span>{notifications.message}</span>
+                  <span>{notification.message}</span>
 
                   {/* Botón de eliminar */}
                   <button
                     className={styles.deleteButton}
-                    onClick={() => {
-                      removeNotification(notifications.id);
-                    }
-                    }
+                    onClick={() => removeNotification(notification.id)}
                   >
                     X
                   </button>
                 </div>
               ))}
             </div>
+
             {/* Lista de formularios */}
             <div className={styles.taskListContainer}>
-                {formIds.map((formId) => (
-                  <div key={formId} className={styles.taskCard}>
-                    <div className={styles.taskHeader}>
-                      <h3>Formulario {formId}</h3>
-                    </div>
-                    <form className={styles.taskForm}>
-                      <div className={styles.taskField}>
-                        <label className={styles.taskLabel}>Título</label>
-                        <input
-                          type="text"
-                          value={formsData[formId]?.title || ""}
-                          readOnly
-                          className={styles.taskInput}
-                        />
-                      </div>
-                      <div className={styles.taskField}>
-                        <label className={styles.taskLabel}>Descripción</label>
-                        <textarea
-                          value={formsData[formId]?.description || ""}
-                          readOnly
-                          className={styles.taskTextarea}
-                        />
-                      </div>
-                    </form>
-                  </div>
-                ))}
-            </div>
+  {Object.values(formsData).map((form, index) => (
+    <div key={form.id || `form-${index}`} className={styles.taskCard}>
+      <div className={styles.taskHeader}>
+        <h3>Formulario {form.id}</h3>
+      </div>
+      <form className={styles.taskForm}>
+        <div className={styles.taskField}>
+          <label className={styles.taskLabel}>Título</label>
+          <input
+            type="text"
+            value={form.title || "Sin título"}
+            readOnly
+            className={styles.taskInput}
+          />
+        </div>
+        <div className={styles.taskField}>
+          <label className={styles.taskLabel}>Descripción</label>
+          <textarea
+            value={form.description || "Sin descripción"}
+            readOnly
+            className={styles.taskTextarea}
+          />
+        </div>
+      </form>
+    </div>
+  ))}
+</div>
 
           </>
         )

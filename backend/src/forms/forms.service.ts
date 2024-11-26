@@ -70,34 +70,34 @@ export class FormsService {
 
   async update(formId: number, updateFormDto: UpdateFormDto): Promise<Form> {
     try {
+      // Verifica si el formulario existe
       const form = await this.prisma.form.findUnique({
         where: { id: formId },
-        
       });
-      
-
+  
       if (!form) {
         throw new NotFoundException('Formulario no encontrado');
       }
-      const message = "Formulario Actualizado: ";
-      this.updateGateway.sendFormUpdate(form, message);
-     
-
-      return await this.prisma.form.update({
+  
+      // Actualiza el formulario y devuelve el resultado completo
+      const updatedForm = await this.prisma.form.update({
         where: { id: formId },
         data: updateFormDto,
       });
+  
+      const message = "Formulario Actualizado: ";
+      this.updateGateway.sendFormUpdate(updatedForm, message); // Envia el formulario completo
+  
+      return updatedForm; // Devuelve el formulario actualizado completo
     } catch (error) {
-      // Usamos excepciones específicas de NestJS para manejar errores
+      // Manejo de errores específico
       if (error instanceof NotFoundException) {
         throw error;
       }
       throw new InternalServerErrorException('Error al actualizar el formulario');
-      
     }
-    
-    
   }
+  
 
   
   
