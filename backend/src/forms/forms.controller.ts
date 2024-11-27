@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, InternalServerErrorException,  } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, InternalServerErrorException,UseGuards } from '@nestjs/common';
 import { FormsService } from './forms.service';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
-
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'; 
+import {Roles} from './decorators/roles.decorators'
+import { RolesGuard } from './guards/roles.guard';
 
 export interface Form {
   id: number;
@@ -18,6 +20,8 @@ export class FormsController {
 
   //Crea el legajo correspondiente
   @Post('/create')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('jefe')
   async create(@Body() createFormDto: CreateFormDto) {
     return this.formsService.createForm(createFormDto);
   }

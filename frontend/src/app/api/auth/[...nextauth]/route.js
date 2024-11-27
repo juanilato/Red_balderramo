@@ -8,7 +8,7 @@ const handler = NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -28,7 +28,7 @@ const handler = NextAuth({
         }
 
         const user = await res.json();
-
+       
         // Asegúrate de que el backend devuelve estos campos
         if (user && user.user && user.token) {
           return {
@@ -56,6 +56,7 @@ const handler = NextAuth({
         token.id = user.id;           // Asegúrate de que el id esté presente
         token.username = user.username; // Si también necesitas el username
         token.token = user.token;       // El token JWT
+        token.rol = user.user?.rol;
     
       }
       return token;
@@ -64,6 +65,7 @@ const handler = NextAuth({
       session.user.id = token.id;      // Asignar el id a la sesión
       session.user.username = token.username;
       session.user.token = token.token; // Asignar el token a la sesión
+      session.user.rol = token.rol;
       return session;
     },
   },

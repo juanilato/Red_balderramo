@@ -40,7 +40,13 @@ export class AuthService {
   }
 
   generateJwt(user: any): string {
-    const payload = { sub: user.id, username: user.usuario };
+   
+    const payload = { 
+      id: user.id,         
+      usuario: user.usuario, 
+      rol: user.rol       
+    };
+
     return this.jwtService.sign(payload);
   }
 }

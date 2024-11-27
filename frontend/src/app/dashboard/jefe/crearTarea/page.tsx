@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
+import { useSession } from "next-auth/react";
 
 
 interface Empleado{
@@ -18,6 +19,7 @@ interface Form{
 }
 
 const TaskPage = () => {
+  const { data: session, status } = useSession();
   const [empleados, setEmpleados] = useState <Empleado[]> ([]);
   const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState <Empleado> ();
   const [forms, setForms] = useState <Form[]> ([]);
@@ -78,21 +80,26 @@ const TaskPage = () => {
   };
 
   const handleFormSubmit = async (event) => {
+    if (!session?.user) return;
     event.preventDefault();
     if (!formData.title || !formData.description) {
       alert("Título y descripción son obligatorios.");
       return;
     }
+    
     if (empleadoSeleccionado) {
       const method = isEditing ? 'PATCH' : 'POST';
       const endpoint = isEditing
         ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${isEditing}`
         : `${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/create`;
 
+        const token = (session.user as { token: string }).token;
+
       const response = await fetch(endpoint, {
         method,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           ...formData,
