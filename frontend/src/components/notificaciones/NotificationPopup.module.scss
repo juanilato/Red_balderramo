@@ -1,0 +1,31 @@
+.notification-popup {
+    position: fixed;
+    top: 20px;
+    right: -400px; /* Empieza fuera de la pantalla, hacia la derecha */
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: right 1s ease-in-out; /* Animación para moverlo hacia la derecha */
+    cursor: pointer;
+    z-index: 9999;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .notification-popup.visible {
+    right: 20px; /* Se mueve hacia la izquierda, mostrando la notificación */
+  }
+  
+  .notification-popup.hidden {
+    right: -400px; /* Desaparece hacia la derecha */
+  }
+  
+  .notification-popup-message {
+    flex: 1;
+    font-size: 16px;
+  }
+  

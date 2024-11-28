@@ -18,7 +18,7 @@ import { SecurityMiddleware } from './middleware/security.middleware';
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(MiddlewareLogs, SecurityMiddleware) 
+      .apply(MiddlewareLogs, SecurityMiddleware ) 
       .exclude('auth/login')
       .forRoutes('*'); 
   }

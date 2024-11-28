@@ -6,6 +6,8 @@ import { Loader } from "../../../components/iniciodesesion/components/Loader";
 import io from "socket.io-client";
 import React from "react";
 import styles from './styles.module.scss';
+import NotificationCenter from '../../../components/notificaciones/Notificationcenter'
+import NotificationPopup from '../../../components/notificaciones/Notificationpopup';
 
 interface FormData {
   id: number;
@@ -18,26 +20,44 @@ const DashboardPage = () => {
   const { data: session, status } = useSession();
   const [clientData, setClientData] = useState<{ forms: FormData[] } | null>(null);
   const [loading, setLoading] = useState(true);
-  const [notifications, setNotifications] = useState<{ id: number; message: string }[]>([]);
+  const [notifications, setNotifications] = useState<{ id: number; message: string; read?: boolean }[]>([]);
   const [formsData, setFormsData] = useState<{ [key: number]: FormData }>({});
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+
+  const [isVisible, setIsVisible] = useState(false);
+  
 
 
   // Función para añadir una notificación
   const addNotification = (message: string) => {
     const generateUniqueId = () => Date.now() + Math.random().toString(36).slice(2);
     const id = parseInt(generateUniqueId());
+    setNotifications((prevState) => [...prevState, { id, message, read: false }]);
 
-    setNotifications((prevState) => [...prevState, { id, message }]);
+    setShowPopup(true);
+  };
+  const handleNotificationClick = () => {
+    setIsVisible(true);
 
-    // Eliminar la notificación automáticamente después de 5 segundos
-    setTimeout(() => {
-      removeNotification(id);
-    }, 5000);
   };
 
   // Función para eliminar notificaciones
   const removeNotification = (id: number) => {
-    setNotifications((prevState) => prevState.filter((notif) => notif.id !== id));
+    setNotifications((prevState) => {
+      const updatedNotifications = prevState.filter((notif) => notif.id !== id);
+      if (updatedNotifications.length === 0) {
+        setIsVisible(false); // Cierra el menú si no hay notificaciones restantes
+      }
+      return updatedNotifications;
+    });
+  };
+
+  const openNotification = (id: number) => {
+    setNotifications((prevState) =>
+      prevState.map((notif) =>
+        notif.id === id ? { ...notif, read: true } : notif
+      )
+    );
   };
 
   // Función para obtener los datos del cliente
@@ -125,14 +145,14 @@ const DashboardPage = () => {
       query: { userId },
     });
 
-    socket.on("formUpdate", (updatedForm: { id: number }, message: string) => {
+    socket.on("formUpdate", (updatedForm: { title: string , id: number}, message: string) => {
       // Actualizar solo el formulario relevante
       fetchClientData();
       //fetchSingleForm(updatedForm.id); Debería arreglarse pero no se como  =(
 
-
+      console.log(updatedForm);
       // Añadir notificación
-      addNotification(`${message} Formulario ID: ${updatedForm.id}`);
+      addNotification(`${message} ${updatedForm.title}`);
     });
 
     return () => {
@@ -141,7 +161,11 @@ const DashboardPage = () => {
     };
   }, [status, session]);
 
+
+
   // Mostrar formularios y notificaciones
+  const unreadCount = notifications.filter((notif) => !notif.read).length;
+
   return (
     <div>
       {loading ? (
@@ -149,54 +173,54 @@ const DashboardPage = () => {
       ) : (
         clientData && (
           <>
-            {/* Contenedor de notificaciones */}
-            <div className={styles["notifications-container"]}>
-              {notifications.map((notification) => (
-                <div key={notification.id} className={styles.notification}>
-                  {/* Mensaje de la notificación */}
-                  <span>{notification.message}</span>
+            {/* Mostrar el centro de notificaciones */}
+            <NotificationCenter
+              notifications={notifications}
+              removeNotification={removeNotification}
+              openNotification={openNotification}
+              unreadCount={unreadCount}
+              isVisible={isVisible} 
+              setIsVisible={setIsVisible} 
+            />
+          {showPopup && notifications.length > 0 && (
+            <NotificationPopup 
+            key={notifications[notifications.length - 1].id}  
 
-                  {/* Botón de eliminar */}
-                  <button
-                    className={styles.deleteButton}
-                    onClick={() => removeNotification(notification.id)}
-                  >
-                    X
-                  </button>
+            notification={notifications[notifications.length - 1]} 
+            onClick={handleNotificationClick}
+          
+            />
+          )}
+
+            {/* Mostrar formularios */}
+            <div className={styles.taskListContainer}>
+              {Object.values(formsData).map((form, index) => (
+                <div key={form.id || `form-${index}`} className={styles.taskCard}>
+                  <div className={styles.taskHeader}>
+                    <h3>Formulario {form.id}</h3>
+                  </div>
+                  <form className={styles.taskForm}>
+                    <div className={styles.taskField}>
+                      <label className={styles.taskLabel}>Título</label>
+                      <input
+                        type="text"
+                        value={form.title || "Sin título"}
+                        readOnly
+                        className={styles.taskInput}
+                      />
+                    </div>
+                    <div className={styles.taskField}>
+                      <label className={styles.taskLabel}>Descripción</label>
+                      <textarea
+                        value={form.description || "Sin descripción"}
+                        readOnly
+                        className={styles.taskTextarea}
+                      />
+                    </div>
+                  </form>
                 </div>
               ))}
             </div>
-
-            {/* Lista de formularios */}
-            <div className={styles.taskListContainer}>
-  {Object.values(formsData).map((form, index) => (
-    <div key={form.id || `form-${index}`} className={styles.taskCard}>
-      <div className={styles.taskHeader}>
-        <h3>Formulario {form.id}</h3>
-      </div>
-      <form className={styles.taskForm}>
-        <div className={styles.taskField}>
-          <label className={styles.taskLabel}>Título</label>
-          <input
-            type="text"
-            value={form.title || "Sin título"}
-            readOnly
-            className={styles.taskInput}
-          />
-        </div>
-        <div className={styles.taskField}>
-          <label className={styles.taskLabel}>Descripción</label>
-          <textarea
-            value={form.description || "Sin descripción"}
-            readOnly
-            className={styles.taskTextarea}
-          />
-        </div>
-      </form>
-    </div>
-  ))}
-</div>
-
           </>
         )
       )}

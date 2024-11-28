@@ -1,0 +1,80 @@
+.notification-center {
+  position: fixed; /* Mantener el centro de notificaciones fijo */
+  top: 20px;
+  right: -320px; /* Inicialmente fuera de la pantalla */
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: right 0.5s ease-in-out; /* Animación para deslizar de derecha a izquierda */
+}
+
+.notification-center.show {
+  right: 20px; /* Mostrar la barra al hacer click */
+}
+
+.notification-counter {
+  gap: 5px;
+  position: absolute;
+  top: -5px;
+  right: 490px;
+  width: 50px;
+  height: 50px;
+  background-color: #1e1e1e;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 16px;
+
+
+}
+
+
+.notifications-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #f8d7da;
+
+  border-left: 1px solid #ddd;
+  width: 320px;
+  max-height: 400px;
+  padding: 15px;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5%;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #f8d7da;
+  color: #721c24;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+.notification-item.unread {
+  background-color: #df2f3e;
+  /* Resalta las no leídas */
+}
+
+.notification-item:hover {
+  background-color: #f8d7da; /* Efecto hover */
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #721c24;
+  font-size: 16px;
+  cursor: pointer;
+}

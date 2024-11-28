@@ -36,6 +36,9 @@ const TaskPage = () => {
 
   const dropdownRef = useRef(null);
 
+
+
+  
   useEffect(() => {
     async function fetchEmpleados() {
       if (session && session.user ) {
@@ -51,6 +54,8 @@ const TaskPage = () => {
     fetchEmpleados();
   }, [session]);
 
+
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
