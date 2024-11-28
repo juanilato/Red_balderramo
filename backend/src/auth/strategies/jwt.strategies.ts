@@ -6,18 +6,19 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extrae el token del encabezado Authorization: Bearer <token>
-      ignoreExpiration: false, // Rechaza tokens expirados
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Extrae el token (frontend)
+      ignoreExpiration: false, // Rechaza tokens expirados 
       secretOrKey: '12345', // Clave secreta usada para verificar la firma del token
     });
   }
 
-  /**
-   * Este método valida el payload decodificado del JWT.
-   * El objeto devuelto será asignado a `request.user`.
-   */
-  async validate(payload: any) {
 
+  //Este método valida el payload decodificado del JWT.
+
+  async validate(payload: any) {
+  // Retorna un objeto con los datos esenciales del usuario, extraídos del payload.
+  // Esto permite que las rutas protegidas accedan a la información del usuario
+  // autenticado a través del objeto `request.user`.
     return { id: payload.id, usuario: payload.usuario, rol: payload.rol }; 
   }
 }

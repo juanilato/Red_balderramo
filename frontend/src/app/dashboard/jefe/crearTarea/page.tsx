@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import { useSession } from "next-auth/react";
+import Swal from 'sweetalert2';
 
 
 interface Empleado{
@@ -19,7 +20,7 @@ interface Form{
 }
 
 const TaskPage = () => {
-  const { data: session, status } = useSession();
+  
   const [empleados, setEmpleados] = useState <Empleado[]> ([]);
   const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState <Empleado> ();
   const [forms, setForms] = useState <Form[]> ([]);
@@ -31,17 +32,24 @@ const TaskPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
+  const { data: session, status } = useSession();
 
   const dropdownRef = useRef(null);
 
   useEffect(() => {
     async function fetchEmpleados() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/all`);
+      if (session && session.user ) {
+      const token = (session?.user as { token: string }).token;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/all`, {     
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }});
       const data = await response.json();
       setEmpleados(data);
-    }
+    }}
     fetchEmpleados();
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -65,7 +73,14 @@ const TaskPage = () => {
     setEmpleadoSeleccionado(empleado);
     setShowDropdown(false);
     async function fetchForms() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${empleado.id}`);
+      const token = (session?.user as { token: string }).token;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${empleado.id}`, 
+        {     
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }});
+      
       const data = await response.json();
       setForms(data);
     }
@@ -106,7 +121,7 @@ const TaskPage = () => {
           userId: empleadoSeleccionado.id,
         }),
       });
-
+      
       if (response.ok) {
         const updatedForm = await response.json();
         if (isEditing) {
@@ -119,7 +134,15 @@ const TaskPage = () => {
         setIsEditing(null);
         setFormData({ title: '', description: '', userId: '' });
       } else {
-        alert("Error al actualizar o crear el formulario.");
+        const errorResponse = await response.json();
+
+        Swal.fire({
+          title: '¡Error!',
+          text: errorResponse.message,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+        
       }
     }
   };
@@ -132,14 +155,26 @@ const TaskPage = () => {
   const handleDeleteForm = async (formId) => {
     const confirmed = window.confirm("¿Estás seguro de que deseas eliminar este formulario?");
     if (confirmed) {
+      const token = (session?.user as { token: string }).token;
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forms/${formId}`, {
-        method: 'DELETE',
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
       });
       
       if (response.ok) {
         setForms((prevForms) => prevForms.filter((form) => form.id !== formId));
       } else {
-        alert("Error al eliminar el formulario.");
+        const errorResponse = await response.json();
+        console.log(errorResponse);
+        Swal.fire({
+          title: '¡Error!',
+          text: errorResponse.message,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     }
   };

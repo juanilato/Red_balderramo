@@ -39,14 +39,16 @@ export class AuthService {
     return await bcrypt.hash(password, saltRounds);
   }
 
+
+  // Método para generar un token JWT basado en los datos de un usuario
   generateJwt(user: any): string {
-   
+   //Creación del payload (datos que se incluirán en el JWT)
     const payload = { 
       id: user.id,         
       usuario: user.usuario, 
       rol: user.rol       
     };
-
+    // Este servicio agrega automáticamente la clave secreta y las opciones configuradas en el módulo JWT
     return this.jwtService.sign(payload);
   }
 }

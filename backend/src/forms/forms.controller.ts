@@ -18,7 +18,9 @@ export interface Form {
 export class FormsController {
   constructor(private readonly formsService: FormsService) {}
 
-  //Crea el legajo correspondiente
+  //Crea el legajo correspondiente (permite la creación a rol jefe, 
+  // Usa JwtAuthGuard para seguridad de que cookie esta creada y 
+  //RolesGuard para seguridad que rol cumple con el solicitado)
   @Post('/create')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('jefe')
@@ -51,6 +53,8 @@ export class FormsController {
 
   //ruta para asignar un formulario a un usuario
   @Patch(':userId/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('jefe')
   async updateFormUser(@Param('id')id: string, @Param('userId') userId: string){
     const parsedUserId = parseInt(userId, 10);
     const parsedFormId = parseInt(id, 10);
@@ -59,6 +63,8 @@ export class FormsController {
 
 // Ruta para actualizar un formulario
 @Patch('/:id')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('jefe')
 async update(@Param('id') id: string, @Body() updateFormDto: UpdateFormDto) {
   const parsedFormId = parseInt(id, 10);
 
@@ -80,6 +86,8 @@ async update(@Param('id') id: string, @Body() updateFormDto: UpdateFormDto) {
 // Ruta para eliminar un formulario
 
 @Delete('/:id')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('jefe')
 async remove(@Param('id') id: string) {
 const parsedFormId = parseInt(id, 10);
 
