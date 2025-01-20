@@ -10,7 +10,6 @@ export class MiddlewareLogs implements NestMiddleware {
     console.log(`Request URL: ${req.originalUrl}`); // URL de la solicitud
     console.log(`Request Time: ${new Date().toISOString()}`); // Fecha y hora de la solicitud
 
-
     next(); // Permite que la solicitud pase al siguiente middleware o al controlador
   }
 }
